@@ -28,7 +28,7 @@ namespace gr {
 
     class sdc_encode_bb_impl : public sdc_encode_bb {
      private:
-      // This is the number of basis states for the qudits. This may or may not
+      // This is the root number of basis states for the qudits. This may or may not
       // be the number of bits to encode with. The number of basis states can
       // support up to n^2 number of states, while bits have 2^n states.
       //
@@ -38,13 +38,13 @@ namespace gr {
       // The bitmask for the given dimension.
       unsigned char d_bitmask;
 
-      // The number of bits that can be encoded into each output.
+      // The number of bits that can be encoded into each qudit.
       unsigned char d_num_bits_encoded;
 
       // The number of bytes required each iteration.
       unsigned char d_num_bytes_required;
 
-      // The number of encoded flags to output each iteration.
+      // The number of flags to output each iteration.
       unsigned char d_num_flags_output;
 
      public:     

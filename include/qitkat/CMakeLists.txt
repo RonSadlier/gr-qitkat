@@ -23,5 +23,6 @@
 install(FILES
     api.h
     sdc_encode_bb.h
+    sdc_decode_bb.h
     DESTINATION include/qitkat
 )

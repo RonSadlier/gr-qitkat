@@ -9,8 +9,11 @@
 
 %{
 #include "qitkat/sdc_encode_bb.h"
+#include "qitkat/sdc_decode_bb.h"
 %}
 
 
 %include "qitkat/sdc_encode_bb.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, sdc_encode_bb);
+%include "qitkat/sdc_decode_bb.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, sdc_decode_bb);

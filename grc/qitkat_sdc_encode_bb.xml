@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<block>
+  <name>SDC Encode</name>
+  <key>qitkat_sdc_encode_bb</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.sdc_encode_bb($n)</make>
+  <param>
+    <name>n</name>
+    <key>n</key>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>byte</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>byte</type>
+  </source>
+  <doc>
+    Encode incoming bytes into SDC flags, which represent the bell states used to encode the original bits.
+  </doc>
+</block>

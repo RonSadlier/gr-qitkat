@@ -26,7 +26,8 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND qitkat_sources
-)
+    sdc_encode_bb_impl.cc
+    )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

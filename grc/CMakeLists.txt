@@ -18,5 +18,6 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
+    qitkat_sdc_encode_bb.xml
     DESTINATION share/gnuradio/grc/blocks
 )

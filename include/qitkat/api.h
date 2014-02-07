@@ -1,3 +1,4 @@
+/* -*- c++ -*- */
 /*
  * Copyright 2011 Free Software Foundation, Inc.
  *
@@ -25,9 +26,9 @@
 #include <gnuradio/attributes.h>
 
 #ifdef gnuradio_qitkat_EXPORTS
-#  define QITKAT_API __GR_ATTR_EXPORT
+  #define QITKAT_API __GR_ATTR_EXPORT
 #else
-#  define QITKAT_API __GR_ATTR_IMPORT
+  #define QITKAT_API __GR_ATTR_IMPORT
 #endif
 
 #endif /* INCLUDED_QITKAT_API_H */

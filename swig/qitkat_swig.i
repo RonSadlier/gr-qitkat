@@ -11,6 +11,7 @@
 #include "qitkat/sdc_encode_bb.h"
 #include "qitkat/sdc_decode_bb.h"
 #include "qitkat/ber_bf.h"
+#include "qitkat/bsc_bb.h"
 %}
 
 
@@ -20,3 +21,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, sdc_encode_bb);
 GR_SWIG_BLOCK_MAGIC2(qitkat, sdc_decode_bb);
 %include "qitkat/ber_bf.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, ber_bf);
+%include "qitkat/bsc_bb.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, bsc_bb);

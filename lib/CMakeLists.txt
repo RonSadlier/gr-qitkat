@@ -28,6 +28,7 @@ list(APPEND qitkat_sources
     sdc_encode_bb_impl.cc
     sdc_decode_bb_impl.cc
     ber_bf_impl.cc
+    bsc_bb_impl.cc
 )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})

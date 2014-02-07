@@ -25,5 +25,6 @@ install(FILES
     sdc_encode_bb.h
     sdc_decode_bb.h
     ber_bf.h
+    bsc_bb.h
     DESTINATION include/qitkat
 )

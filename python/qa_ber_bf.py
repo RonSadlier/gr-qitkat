@@ -161,7 +161,7 @@ class qa_ber_bf(gr_unittest.TestCase):
     expected_result = (1.0, 1.0)
     self.ber_calculate(src_data0, src_data1, expected_result, 2, 15, False)
 
-  def test_016(self):
+  def test_017(self):
     # Frame length of 15000, BER of 0.17, bitmask of 255
     # Look for the average BER over all samples
     num_items = 15000

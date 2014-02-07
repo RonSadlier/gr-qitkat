@@ -29,262 +29,131 @@ class qa_ber_bf(gr_unittest.TestCase):
 
   def tearDown(self):
     self.tb = None
-      
+
+  def ber_calculate(self, src_data0, src_data1, exp_data, frame_length, bit_mask):
+    src0 = blocks.vector_source_b(src_data0)
+    src1 = blocks.vector_source_b(src_data1)
+    ber = qitkat.ber_bf(frame_length, bit_mask)
+    # Data is sink
+    data = blocks.vector_sink_f()
+    self.tb.connect(src0, (ber, 0))
+    self.tb.connect(src1, (ber, 1))
+    self.tb.connect(ber, data)
+    self.tb.run()
+    result_data = data.data()
+    self.assertEqual(exp_data, result_data)
+
   def test_001(self):
     # Frame length of 1, BER of 0.0, bitmask of 255
     src_data0 = (0, 1, 85, 170, 15, 255)
     src_data1 = (0, 1, 85, 170, 15, 255)
     expected_result = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 255)
 
   def test_002(self):
     # Frame length of 2, BER of 0.0, bitmask of 255
     src_data0 = (0, 1, 85, 170, 15, 255)
     src_data1 = (0, 1, 85, 170, 15, 255)
     expected_result = (0.0, 0.0, 0.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 255)
 
   def test_003(self):
     # Frame length of 1, BER of 0.0, bitmask of 7
     src_data0 = (0, 1, 2, 3, 4, 5)
     src_data1 = (0, 1, 2, 3, 4, 5)
     expected_result = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 7)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 7)
 
   def test_004(self):
     # Frame length of 2, BER of 0.0, bitmask of 7
     src_data0 = (0, 1, 2, 3, 4, 5)
     src_data1 = (0, 1, 2, 3, 4, 5)
     expected_result = (0.0, 0.0, 0.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 7)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 7)
 
   def test_005(self):
     # Frame length of 1, BER of 0.125, bitmask of 255
     src_data0 = (0, 1, 85, 170, 15, 255)
     src_data1 = (1, 3, 84, 171, 14, 254)
     expected_result = (0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 255)
 
   def test_006(self):
     # Frame length of 2, BER of 0.125, bitmask of 255
     src_data0 = (0, 1, 85, 170, 13, 255)
     src_data1 = (1, 3, 84, 171, 12, 254)
     expected_result = (0.125, 0.125, 0.125)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 255)
 
   def test_007(self):
     # Frame length of 1, BER of 0.25, bitmask of 15
     src_data0 = (0, 1, 85, 170, 15, 255)
     src_data1 = (1, 3, 84, 171, 14, 254)
     expected_result = (0.25, 0.25, 0.25, 0.25, 0.25, 0.25)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 15)
 
   def test_008(self):
     # Frame length of 2, BER of 0.25, bitmask of 15
     src_data0 = (0, 1, 85, 170, 15, 255)
     src_data1 = (1, 3, 84, 171, 13, 254)
     expected_result = (0.25, 0.25, 0.25)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 15)
 
   def test_009(self):
     # Frame length of 1, BER of 0.5, bitmask of 255
     src_data0 = (240, 85)
     src_data1 = (255, 255)
     expected_result = (0.5, 0.5)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 255)
 
   def test_010(self):
     # Frame length of 2, BER of 0.5, bitmask of 255
     src_data0 = (240, 85, 91, 51)
     src_data1 = (255, 255, 254, 255)
     expected_result = (0.5, 0.5)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 255)
 
   def test_011(self):
     # Frame length of 1, BER of 0.5, bitmask of 15
     src_data0 = (15, 10, 11, 7)
     src_data1 = (3, 15, 13, 2)
     expected_result = (0.5, 0.5, 0.5, 0.5)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 15)
 
   def test_012(self):
     # Frame length of 2, BER of 0.5, bitmask of 15
     src_data0 = (0, 15, 11, 7)
     src_data1 = (3, 3, 13, 2)
     expected_result = (0.5, 0.5)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 15)
 
   def test_013(self):
     # Frame length of 1, BER of 1.0, bitmask of 255
     src_data0 = (0, 170, 240, 221)
     src_data1 = (255, 85, 15, 34)
     expected_result = (1.0, 1.0, 1.0, 1.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 255)
 
   def test_014(self):
     # Frame length of 2, BER of 1.0, bitmask of 255
     src_data0 = (0, 170, 240, 221)
     src_data1 = (255, 85, 15, 34)
     expected_result = (1.0, 1.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 255)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 255)
 
   def test_015(self):
     # Frame length of 1, BER of 1.0, bitmask of 15
     src_data0 = (0, 10, 3, 1)
     src_data1 = (15, 5, 12, 14)
     expected_result = (1.0, 1.0, 1.0, 1.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(1, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 1, 15)
 
   def test_016(self):
     # Frame length of 2, BER of 1.0, bitmask of 15
     src_data0 = (0, 10, 3, 1)
     src_data1 = (15, 5, 12, 14)
     expected_result = (1.0, 1.0)
-    src0 = blocks.vector_source_b(src_data0)
-    src1 = blocks.vector_source_b(src_data1)
-    ber = qitkat.ber_bf(2, 15)
-    dst = blocks.vector_sink_f()
-    self.tb.connect(src0, (ber, 0))
-    self.tb.connect(src1, (ber, 1))
-    self.tb.connect(ber, dst)
-    self.tb.run()
-    result_data = dst.data()
-    self.assertEqual(expected_result, result_data)
+    self.ber_calculate(src_data0, src_data1, expected_result, 2, 15)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_ber_bf, "qa_ber_bf.xml")

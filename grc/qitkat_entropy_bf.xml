@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<block>
+  <name>entropy_bf</name>
+  <key>qitkat_entropy_bf</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.entropy_bf($num_items)</make>
+  <param>
+    <name>Number of Items</name>
+    <key>num_items</key>
+    <value>1000</value>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>byte</type>
+    <nports>2</nports>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>float</type>
+  </source>
+  <doc>
+    Compute the shannon entropy of a string of binary symbols.
+  </doc>
+</block>

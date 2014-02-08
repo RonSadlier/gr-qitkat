@@ -21,5 +21,6 @@ install(FILES
     qitkat_sdc_decode_bb.xml
     qitkat_ber_bf.xml
     qitkat_bsc_bb.xml
+    qitkat_entropy_bf.xml
     DESTINATION share/gnuradio/grc/blocks
 )

@@ -26,5 +26,6 @@ install(FILES
     sdc_decode_bb.h
     ber_bf.h
     bsc_bb.h
+    entropy_bf.h
     DESTINATION include/qitkat
 )

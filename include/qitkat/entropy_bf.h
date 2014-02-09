@@ -33,8 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API entropy_bf : virtual public gr::block
-    {
+    class QITKAT_API entropy_bf : virtual public gr::block {
      public:
       typedef boost::shared_ptr<entropy_bf> sptr;
 

@@ -34,8 +34,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API ber_bf : virtual public gr::sync_decimator
-    {
+    class QITKAT_API ber_bf : virtual public gr::sync_decimator {
      public:
       typedef boost::shared_ptr<ber_bf> sptr;
 

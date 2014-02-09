@@ -33,8 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API sdc_decode_bb : virtual public gr::block
-    {
+    class QITKAT_API sdc_decode_bb : virtual public gr::block {
      public:
       typedef boost::shared_ptr<sdc_decode_bb> sptr;
 

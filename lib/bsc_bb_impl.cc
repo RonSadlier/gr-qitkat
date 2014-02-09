@@ -47,9 +47,6 @@ namespace gr {
   
       // Initialize bit mask for encoded alphabet.
       d_bit_mask = bit_mask;
-
-      // Calculate size of d_bit_mask.
-      d_bit_mask_len = std::bitset<8>(d_bit_mask).count();  
     }
 
     bsc_bb_impl::~bsc_bb_impl() {
@@ -69,14 +66,18 @@ namespace gr {
         unsigned int pt = (unsigned int)floorf(d_error_rate*(RAND_MAX));
 
         // Loop through bytes
+        // TODO: Rewrite this to optimize
         for(int i = 0; i < noutput_items; i++) {
           out[i] = in[i];
           // Loop through bits in the byte
-          for(unsigned char j = 0; j < d_bit_mask_len; j++) {
-            // Bin the random number into 0x0 or 0x1
-            if(rand() < pt) {
-              // Flip the ith bit in the byte
-              out[i] ^= 1 << j;
+          for(unsigned char j = 0; j < 8; j++) {
+            // We only care about the bits set in the bitset
+            if(((unsigned char)pow(2, j) & (1 << j)) & (d_bit_mask & (1 << j))) {
+              // Bin the random number into 0x0 or 0x1
+              if(rand() < pt) {
+                // Flip the ith bit in the byte
+                out[i] ^= 1 << j;
+              }
             }
           }
         }

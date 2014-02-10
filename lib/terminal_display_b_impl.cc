@@ -47,7 +47,7 @@ namespace gr {
         const unsigned char *in = (const unsigned char *) input_items[0];
 
         for(int i = 0; i < noutput_items; i++) {
-          std::cout << in[i];
+          std::cout << (unsigned char)in[i];
         }
 
         return noutput_items;

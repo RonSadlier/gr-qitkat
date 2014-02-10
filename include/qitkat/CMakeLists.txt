@@ -27,5 +27,6 @@ install(FILES
     ber_bf.h
     bsc_bb.h
     entropy_bf.h
+    terminal_display_b.h
     DESTINATION include/qitkat
 )

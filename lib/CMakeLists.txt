@@ -30,6 +30,7 @@ list(APPEND qitkat_sources
     ber_bf_impl.cc
     bsc_bb_impl.cc
     entropy_bf_impl.cc
+    terminal_display_b_impl.cc
 )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})

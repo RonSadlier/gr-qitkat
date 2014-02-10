@@ -13,6 +13,7 @@
 #include "qitkat/ber_bf.h"
 #include "qitkat/bsc_bb.h"
 #include "qitkat/entropy_bf.h"
+#include "qitkat/terminal_display_b.h"
 %}
 
 
@@ -26,3 +27,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, ber_bf);
 GR_SWIG_BLOCK_MAGIC2(qitkat, bsc_bb);
 %include "qitkat/entropy_bf.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, entropy_bf);
+%include "qitkat/terminal_display_b.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, terminal_display_b);

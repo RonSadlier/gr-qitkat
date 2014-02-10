@@ -46,3 +46,4 @@ GR_ADD_TEST(qa_sdc_decode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa
 GR_ADD_TEST(qa_ber_bf ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ber_bf.py)
 GR_ADD_TEST(qa_bsc_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_bsc_bb.py)
 GR_ADD_TEST(qa_entropy_bf ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_entropy_bf.py)
+GR_ADD_TEST(qa_terminal_display_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_terminal_display_b.py)

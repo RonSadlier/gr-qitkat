@@ -28,7 +28,7 @@ class qa_entropy_bf(gr_unittest.TestCase):
 
   def setUp(self):
     self.tb = gr.top_block()
-    self.num_items = 10000;
+    self.num_items = 25000;
     self.window = (self.num_items/2);
     self.precision = 3;
 

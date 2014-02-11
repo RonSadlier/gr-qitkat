@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<block>
+  <name>ecc_repetition_encode_bb</name>
+  <key>qitkat_ecc_repetition_encode_bb</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.ecc_repetition_encode_bb($repetition)</make>
+  <param>
+    <name>Repetition</name>
+    <key>repetition</key>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>byte</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>byte</type>
+  </source>
+  <doc>
+    Duplicate data using repetition.
+  </doc>
+</block>

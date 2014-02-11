@@ -47,3 +47,4 @@ GR_ADD_TEST(qa_ber_bf ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ber_bf
 GR_ADD_TEST(qa_bsc_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_bsc_bb.py)
 GR_ADD_TEST(qa_entropy_bf ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_entropy_bf.py)
 GR_ADD_TEST(qa_terminal_display_b ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_terminal_display_b.py)
+GR_ADD_TEST(qa_ecc_repetition_encode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ecc_repetition_encode_bb.py)

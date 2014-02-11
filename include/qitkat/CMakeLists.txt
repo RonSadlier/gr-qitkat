@@ -28,5 +28,6 @@ install(FILES
     bsc_bb.h
     entropy_bf.h
     terminal_display_b.h
+    ecc_repetition_encode_bb.h
     DESTINATION include/qitkat
 )

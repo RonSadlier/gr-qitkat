@@ -15,6 +15,7 @@
 #include "qitkat/entropy_bf.h"
 #include "qitkat/terminal_display_b.h"
 #include "qitkat/ecc_repetition_encode_bb.h"
+#include "qitkat/ecc_repetition_decode_bb.h"
 %}
 
 
@@ -32,3 +33,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, entropy_bf);
 GR_SWIG_BLOCK_MAGIC2(qitkat, terminal_display_b);
 %include "qitkat/ecc_repetition_encode_bb.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_repetition_encode_bb);
+%include "qitkat/ecc_repetition_decode_bb.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_repetition_decode_bb);

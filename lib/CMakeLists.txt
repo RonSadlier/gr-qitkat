@@ -32,7 +32,8 @@ list(APPEND qitkat_sources
     entropy_bf_impl.cc
     terminal_display_b_impl.cc
     ecc_repetition_encode_bb_impl.cc
-    ecc_repetition_decode_bb_impl.cc )
+    ecc_repetition_decode_bb_impl.cc
+    ecc_hamming74_encode_bb_impl.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

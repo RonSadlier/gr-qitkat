@@ -25,5 +25,6 @@ install(FILES
     qitkat_terminal_display_b.xml
     qitkat_ecc_repetition_encode_bb.xml
     qitkat_ecc_repetition_decode_bb.xml
+    qitkat_ecc_hamming74_encode_bb.xml
     DESTINATION share/gnuradio/grc/blocks
 )

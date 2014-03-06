@@ -17,6 +17,7 @@
 #include "qitkat/ecc_repetition_encode_bb.h"
 #include "qitkat/ecc_repetition_decode_bb.h"
 #include "qitkat/ecc_hamming74_encode_bb.h"
+#include "qitkat/ecc_hamming74_decode_bb.h"
 %}
 
 
@@ -38,3 +39,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_repetition_encode_bb);
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_repetition_decode_bb);
 %include "qitkat/ecc_hamming74_encode_bb.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_hamming74_encode_bb);
+%include "qitkat/ecc_hamming74_decode_bb.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_hamming74_decode_bb);

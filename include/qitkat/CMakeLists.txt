@@ -31,5 +31,6 @@ install(FILES
     ecc_repetition_encode_bb.h
     ecc_repetition_decode_bb.h
     ecc_hamming74_encode_bb.h
+    ecc_hamming74_decode_bb.h
     DESTINATION include/qitkat
 )

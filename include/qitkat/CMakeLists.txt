@@ -33,5 +33,6 @@ install(FILES
     ecc_hamming74_encode_bb.h
     ecc_hamming74_decode_bb.h
     ecc_golay2412_encode_bb.h
+    ecc_golay2412_decode_bb.h
     DESTINATION include/qitkat
 )

@@ -37,7 +37,8 @@ list(APPEND qitkat_sources
     ecc_hamming74_decode_bb_impl.cc
     ecc_golay.cc
     ecc_golaytable.cc
-    ecc_golay2412_encode_bb_impl.cc )
+    ecc_golay2412_encode_bb_impl.cc
+    ecc_golay2412_decode_bb_impl.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

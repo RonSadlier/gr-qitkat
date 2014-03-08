@@ -33,8 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API ecc_golay2412_encode_bb : virtual public gr::block
-    {
+    class QITKAT_API ecc_golay2412_encode_bb : virtual public gr::block {
      public:
       typedef boost::shared_ptr<ecc_golay2412_encode_bb> sptr;
 

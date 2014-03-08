@@ -50,39 +50,39 @@ namespace gr {
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
-        const unsigned char *in = (const unsigned char *) input_items[0];
-        unsigned char *out = (unsigned char *) output_items[0];
+      const unsigned char *in = (const unsigned char *) input_items[0];
+      unsigned char *out = (unsigned char *) output_items[0];
 
-        unsigned int outputPos = 0;
+      unsigned int outputPos = 0;
 
-        for(int i = 0; i < noutput_items; i+=3) {
-          // This are temporary holders for two halfs of 24 bits
-          unsigned long firstPart = 0;
-          unsigned char* pFirstPart = (unsigned char*)&firstPart;
-          unsigned long secondPart = 0;
-          unsigned char* pSecondPart = (unsigned char*)&secondPart;	
+      for(int i = 0; i < noutput_items; i+=3) {
+        // This are temporary holders for two halfs of 24 bits
+        unsigned long firstPart = 0;
+        unsigned char* pFirstPart = (unsigned char*)&firstPart;
+        unsigned long secondPart = 0;
+        unsigned char* pSecondPart = (unsigned char*)&secondPart;	
 
-          // We can only convert 12 bits at a time, so we have to pack them properly
-          pFirstPart[0] = in[i]; // 8 Bits
-          pFirstPart[1] = in[i+1] & 0x0F; // 12 Bits 
-          pSecondPart[0] = (in[i+1] & 0xF0) >> 4; // 4 Bits
-          pSecondPart[0] += (in[i+2] & 0x0F) << 4; // 8 Bits
-          pSecondPart[1] = (in[i+2] & 0xF0) >> 4; // 12 Bits
+        // We can only convert 12 bits at a time, so we have to pack them properly
+        pFirstPart[0] = in[i]; // 8 Bits
+        pFirstPart[1] = in[i+1] & 0x0F; // 12 Bits 
+        pSecondPart[0] = (in[i+1] & 0xF0) >> 4; // 4 Bits
+        pSecondPart[0] += (in[i+2] & 0x0F) << 4; // 8 Bits
+        pSecondPart[1] = (in[i+2] & 0xF0) >> 4; // 12 Bits
 
-          // We encode each 12 bit input to a 24 bit output
-          unsigned long encoded1 = golay_encode(firstPart);
-          unsigned char* pEncoded1 = (unsigned char*)&encoded1;
-          unsigned long encoded2 = golay_encode(secondPart);
-          unsigned char* pEncoded2 = (unsigned char*)&encoded2;
+        // We encode each 12 bit input to a 24 bit output
+        unsigned long encoded1 = golay_encode(firstPart);
+        unsigned char* pEncoded1 = (unsigned char*)&encoded1;
+        unsigned long encoded2 = golay_encode(secondPart);
+        unsigned char* pEncoded2 = (unsigned char*)&encoded2;
 
-          // Unpack our encoded bits
-          out[outputPos] = pEncoded1[0]; // 8 Bits
-          out[outputPos+1] = pEncoded1[1]; // 16 Bits
-          out[outputPos+2] = pEncoded1[2]; // 24 Bits
-          out[outputPos+3] = pEncoded2[0]; // 8 Bits
-          out[outputPos+4] = pEncoded2[1]; // 16 Bits
-          out[outputPos+5] = pEncoded2[2]; // 24 Bits
-          outputPos += 6;
+        // Unpack our encoded bits
+        out[outputPos] = pEncoded1[0]; // 8 Bits
+        out[outputPos+1] = pEncoded1[1]; // 16 Bits
+        out[outputPos+2] = pEncoded1[2]; // 24 Bits
+        out[outputPos+3] = pEncoded2[0]; // 8 Bits
+        out[outputPos+4] = pEncoded2[1]; // 16 Bits
+        out[outputPos+5] = pEncoded2[2]; // 24 Bits
+        outputPos += 6;
       }
       // Consume each input byte
       consume_each(noutput_items);

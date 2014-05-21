@@ -53,3 +53,4 @@ GR_ADD_TEST(qa_ecc_hamming74_encode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOUR
 GR_ADD_TEST(qa_ecc_hamming74_decode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ecc_hamming74_decode_bb.py)
 GR_ADD_TEST(qa_ecc_golay2412_encode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ecc_golay2412_encode_bb.py)
 GR_ADD_TEST(qa_ecc_golay2412_decode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ecc_golay2412_decode_bb.py)
+GR_ADD_TEST(qa_quantum_manager_query ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_quantum_manager_query.py)

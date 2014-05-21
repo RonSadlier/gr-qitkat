@@ -20,6 +20,10 @@
 #include "qitkat/ecc_hamming74_decode_bb.h"
 #include "qitkat/ecc_golay2412_encode_bb.h"
 #include "qitkat/ecc_golay2412_decode_bb.h"
+#include "qitkat/quantum_manager_query.h"
+
+#include "quantum_manager/quantum_manager_server.h"
+using namespace gr::qitkat::quantum_manager;
 %}
 
 
@@ -47,3 +51,8 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_hamming74_decode_bb);
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_encode_bb);
 %include "qitkat/ecc_golay2412_decode_bb.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_decode_bb);
+%include "qitkat/quantum_manager_query.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, quantum_manager_query);
+
+
+%include "quantum_manager_server.i"

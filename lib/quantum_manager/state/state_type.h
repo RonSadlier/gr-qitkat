@@ -21,6 +21,7 @@
 #ifndef INCLUDED_QITKAT_QUANTUM_MANAGER_STATE_STATE_TYPE_H
 #define INCLUDED_QITKAT_QUANTUM_MANAGER_STATE_STATE_TYPE_H
 
+#include <complex>
 #include <vector>
 
 namespace gr {
@@ -31,26 +32,26 @@ namespace gr {
         /**
          * This class is the base for all types of quantum states.
          *
-         * All children should inherit from quantum_state.
-         * This naming convention is funky because great attention should be
-         * given when editing state files. When creating a polymorphic state
-         * object, this class should be used, e.g.
-         *    state_type* = ..
-         * The majority of the parent code is more suited to be in the template file.
+         * The only child of this class should be quantum_state. All implementations
+         * of states should inherit from quantum_state.
+         * The majority of the parent code is more suited to be in the template file,
+         * so there should not be any implementions at all in this file.
          */
         class state_type {
          public:
           state_type() {}
           ~state_type() {}
 
-          virtual unsigned int get_state_size() {}
-          virtual void set_size(unsigned char n, unsigned char m) = 0;
+          virtual void set_state_size(unsigned char n, unsigned char m) = 0;
+          virtual unsigned int get_state_size() = 0;
           virtual unsigned char get_n() = 0;
           virtual unsigned char get_m() = 0;
-          virtual unsigned int insert_state_element(const unsigned char* state) = 0;
+          virtual unsigned short get_state_byte_size() = 0;
           virtual unsigned int get_state_element_count() = 0;
-          virtual unsigned short get_state_unit_size() = 0;
-          // TODO: virtual functions to get standardized states
+          virtual unsigned int insert_state_element(const unsigned char* state) = 0;
+          virtual void delete_state_element(unsigned int state_id) = 0;
+          virtual std::vector<std::complex<double> > get_state_vector(unsigned int state_id) = 0;
+          virtual std::vector<std::vector<std::complex<double> > > get_density_matrix(unsigned int state_id) = 0;
         };
       } // namspace state
     } // namespace quantum_manager

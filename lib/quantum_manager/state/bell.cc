@@ -28,7 +28,7 @@ namespace gr {
     namespace quantum_manager {
       namespace state {
 
-        unsigned short bell::get_state_unit_size() {
+        unsigned short bell::get_state_byte_size() {
           return sizeof(unsigned char);
         }
 
@@ -41,6 +41,15 @@ namespace gr {
           states.insert(std::pair<unsigned int, unsigned char>(state_count, *state));
           return ++state_count;
         }
+
+        std::vector<std::complex<double> > bell::get_state_vector(unsigned int state_id) {
+          // TODO
+        }
+
+        std::vector<std::vector<std::complex<double> > > bell::get_density_matrix(unsigned int state_id) {
+          // TODO
+        }
+
       } // namspace state
     } // namespace quantum_manager
   } // namespace qitkat

@@ -184,7 +184,7 @@ namespace gr {
                * [4:n^2] = noiseparameters
                */
               state::state_type* state_type = state::get_statetype(incoming_packet.body()[0]);
-              state_type->set_size(incoming_packet.body()[1], incoming_packet.body()[2]);
+              state_type->set_state_size(incoming_packet.body()[1], incoming_packet.body()[2]);
               noise::noise_type* noise_type = noise::get_noisetype(incoming_packet.body()[3]);
               noise_type->set_raw_p(&incoming_packet.body()[4], pow(incoming_packet.body()[1], incoming_packet.body()[2]));
 
@@ -193,7 +193,7 @@ namespace gr {
             } else {
               // Normal request
 
-              int unit = quantum_manager::instance()->get_channel(incoming_packet.channel_id())->state_type()->get_state_unit_size();
+              int unit = quantum_manager::instance()->get_channel(incoming_packet.channel_id())->state_type()->get_state_byte_size();
               int div = incoming_packet.body_length() / unit;
 
               switch(incoming_packet.parameter_flag()) {

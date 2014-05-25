@@ -29,11 +29,14 @@ namespace gr {
   namespace qitkat {
     namespace quantum_manager {
       namespace state {
-        /**
-         * Used to save code for different state types.
-         */
+
         template <class T> class quantum_state : public state_type {
          public:
+          void set_state_size(unsigned char n, unsigned char m) {
+            this->n = n;
+            this->m = m;
+          }
+          
           unsigned char get_n() {
             return n;
           }
@@ -42,22 +45,20 @@ namespace gr {
             return m;
           }
 
-          unsigned int get_state_element_count() {
-            return state_count;
-          }
-
-          virtual unsigned short get_state_unit_size() = 0;
-          // TODO: virtual functions to get standardized states
-
-          void set_size(unsigned char n, unsigned char m) {
-            this->n = n;
-            this->m = m;
-          }
-
           unsigned int get_state_size() {
             return pow(n, m);
           }
 
+          unsigned int get_state_element_count() {
+            return state_count;
+          }
+
+          void delete_state_element(unsigned int state_id) {
+            states.erase(state_id);
+          }
+
+          // Since this cannot be accessed through state_type*, this is used
+          // only when the state type is known.
           T get_encoded_state(unsigned int state_id);
 
          protected:

@@ -23,6 +23,7 @@
 
 #include "quantum_state.h"
 #include <complex>
+#include <vector>
 
 namespace gr {
   namespace qitkat {
@@ -37,13 +38,21 @@ namespace gr {
           vector() { }
           ~vector() { }
 
-          unsigned short get_state_unit_size();
+          // Get the number of bytes used to store a single state.
+          unsigned short get_state_byte_size();
 
+          // Return a state in its native format.
           std::vector<std::complex<double> > get_encoded_state(unsigned int state_id);
 
+          // Insert a state from raw bytes. 
           unsigned int insert_state_element(const unsigned char* state);
-        };
 
+          // Return the standardized state vector.
+          std::vector<std::complex<double> > get_state_vector(unsigned int state_id);
+
+          // Return the standardized density matrix.
+          std::vector<std::vector<std::complex<double> > > get_density_matrix(unsigned int state_id);
+        };
       } // namspace state
     } // namespace quantum_manager
   } // namespace qitkat

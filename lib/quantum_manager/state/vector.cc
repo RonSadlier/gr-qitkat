@@ -28,7 +28,7 @@ namespace gr {
     namespace quantum_manager {
       namespace state {
 
-        unsigned short vector::get_state_unit_size() {
+        unsigned short vector::get_state_byte_size() {
           return 16*pow(n, m);
         }
 
@@ -39,13 +39,22 @@ namespace gr {
         unsigned int vector::insert_state_element(const unsigned char* state) {
           std::vector<std::complex<double> > input_state;
 
-          for(unsigned short i = 0; i < get_state_unit_size(); i += 2*sizeof(double)) {
+          for(unsigned short i = 0; i < get_state_byte_size(); i += 2*sizeof(double)) {
             input_state.push_back(std::complex<double>(*(double*)&state[i], *(double*)&state[i+sizeof(double)]));
           }
 
           states.insert(std::pair<unsigned int, std::vector<std::complex<double> > >(state_count, input_state));
           return ++state_count;
         }
+
+        std::vector<std::complex<double> > vector::get_state_vector(unsigned int state_id) {
+          return this->states.at(state_id);
+        }
+
+        std::vector<std::vector<std::complex<double> > > vector::get_density_matrix(unsigned int state_id) {
+          // TODO
+        }
+
       } // namspace state
     } // namespace quantum_manager
   } // namespace qitkat

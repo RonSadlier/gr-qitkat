@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <block>
-  <name>ecc_golay2412_decode_bb</name>
+  <name>Golay2412 Decode</name>
   <key>qitkat_ecc_golay2412_decode_bb</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
+  <category>qitkat.ecc</category>
+  <import>import qitkat.ecc</import>
   <make>qitkat.ecc_golay2412_decode_bb()</make>
   <sink>
     <name>in</name>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>entropy_bf</name>
+  <name>Entropy</name>
   <key>qitkat_entropy_bf</key>
   <category>qitkat</category>
   <import>import qitkat</import>

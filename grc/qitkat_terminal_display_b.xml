@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>terminal_display_b</name>
+  <name>Terminal Display</name>
   <key>qitkat_terminal_display_b</key>
   <category>qitkat</category>
   <import>import qitkat</import>

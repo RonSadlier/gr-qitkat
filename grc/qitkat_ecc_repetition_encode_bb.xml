@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <block>
-  <name>ecc_repetition_encode_bb</name>
+  <name>Repetition Encode</name>
   <key>qitkat_ecc_repetition_encode_bb</key>
-  <category>qitkat</category>
+  <category>qitkat.ecc</category>
   <import>import qitkat</import>
   <make>qitkat.ecc_repetition_encode_bb($repetition)</make>
   <param>

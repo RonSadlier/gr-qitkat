@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>bsc_bb</name>
+  <name>BSC</name>
   <key>qitkat_bsc_bb</key>
   <category>qitkat</category>
   <import>import qitkat</import>

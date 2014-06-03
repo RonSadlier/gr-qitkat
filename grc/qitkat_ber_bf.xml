@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>ber_bf</name>
+  <name>BER</name>
   <key>qitkat_ber_bf</key>
   <category>qitkat</category>
   <import>import qitkat</import>

@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_QITKAT_QUANTUM_MANAGER_OPERATORS_H
-#define INCLUDED_QITKAT_QUANTUM_MANAGER_OPERATORS_H
+#ifndef INCLUDED_QITKAT_QUANTUM_MANAGER_NOISE_OPERATORS_H
+#define INCLUDED_QITKAT_QUANTUM_MANAGER_NOISE_OPERATORS_H
 
 #include <complex>
 #include "../storage_adaptors.h"
@@ -94,4 +94,4 @@ namespace gr {
     } // namespace quantum_manager
   } // namespace qitkat
 } // namespace gr
-#endif /* INCLUDED_QITKAT_QUANTUM_MANAGER_OPERATORS_H */
+#endif /* INCLUDED_QITKAT_QUANTUM_MANAGER_NOISE_OPERATORS_H */

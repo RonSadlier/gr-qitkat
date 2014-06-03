@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -20,6 +20,8 @@
 
 #ifndef INCLUDED_QITKAT_QUANTUM_MANAGER_NOISE_NOISE_TYPE_H
 #define INCLUDED_QITKAT_QUANTUM_MANAGER_NOISE_NOISE_TYPE_H
+
+#include <boost/numeric/ublas/matrix.hpp>
 
 namespace gr {
   namespace qitkat {
@@ -42,9 +44,8 @@ namespace gr {
           noise_type() {}
           ~noise_type() {}
           virtual void set_raw_p(unsigned char* data, unsigned int length) = 0;
-
-          // TODO: The rest of the virtual functions needed for noise types
-
+          virtual void apply_noise(std::vector<std::complex<double> >* state) = 0;
+          virtual void apply_noise(boost::numeric::ublas::matrix<std::complex<double> >* state) = 0;
         };
       } // namspace noise
     } // namespace quantum_manager

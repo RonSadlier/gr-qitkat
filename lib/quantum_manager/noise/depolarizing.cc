@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -30,6 +30,14 @@ namespace gr {
 
         void depolarizing::set_raw_p(unsigned char* data, unsigned int length) {
           set_p(vector<double>(data, data+length));
+        }
+
+        void depolarizing::apply_noise(std::vector<std::complex<double> >* state) {
+          // TODO
+        }
+
+        void depolarizing::apply_noise(boost::numeric::ublas::matrix<std::complex<double> >* state) {
+          // TODO
         }
 
       } // namspace noise

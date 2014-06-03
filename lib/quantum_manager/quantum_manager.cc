@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2013 - 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -26,11 +26,11 @@ namespace gr {
   namespace qitkat {
     namespace quantum_manager {
 
-      quantum_manager* quantum_manager::pInstance = NULL; 
+      quantum_manager* quantum_manager::pInstance = NULL;
 
       quantum_manager* quantum_manager::instance() {
         // Singleton: return this instance if it exists, if not created it
-        if (!pInstance) {		
+        if (!pInstance) {
           pInstance = new quantum_manager;
         }
         return pInstance;
@@ -65,7 +65,7 @@ namespace gr {
        * Create a quantum channel with a desired channel_id and parameters.
        */
       void quantum_manager::create_channel(unsigned char channel_id, state::state_type* state_type, noise::noise_type* noise_type) {
-        std::pair<std::map<unsigned char, quantum_channel>::iterator, bool> ret;     
+        std::pair<std::map<unsigned char, quantum_channel>::iterator, bool> ret;
         ret = quantum_channels.insert(
             std::pair<unsigned char, quantum_channel>(channel_id, quantum_channel(state_type, noise_type)));
 
@@ -108,12 +108,30 @@ namespace gr {
 
         // Used with our custom optimizations. If it is true after running through them, then we have done our work.
         // If it is false after running through our optimizations, we must manually perform the math.
-        bool indicator = false;
+        bool opto_indicator = false;
 
-        unsigned char return_state = noise::special_case_optimization::projective_bell_measurement(current_channel, state_id, indicator);
-        
-        if(!indicator) {
-          // TODO: Manually perform the measurement
+        unsigned char return_state = noise::special_case_optimization::projective_bell_measurement(current_channel, state_id, opto_indicator);
+
+        if(!opto_indicator) {
+          // Check if we can use vector notation
+          if(current_channel.state_type()->is_vector_compatible()) {
+            // We can use the vector state
+            std::vector<std::complex<double> > state = current_channel.state_type()->get_state_vector(state_id);
+            current_channel.noise_type()->apply_noise(&state);
+
+            // Perform projective measurement
+
+            // TODO: Perform projective measurement
+
+          } else {
+            // We have to use the density matrix
+            boost::numeric::ublas::matrix<std::complex<double> > original_state = current_channel.state_type()->get_density_matrix(state_id);
+            current_channel.noise_type()->apply_noise(&state);
+
+            // Perform projective measurement
+
+            // TODO: Perform projective measurement
+          }
         }
 
         return return_state;

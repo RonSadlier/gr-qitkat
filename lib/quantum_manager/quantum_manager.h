@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2013 - 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -79,6 +79,11 @@ namespace gr {
         // Singleton functions.
         static quantum_manager* instance();
 
+        // The mathematically defined mod function.
+        int mod(int a, int b);
+
+        unsigned int pick_weighted_number(double distribution[], unsigned int size);
+
         void create_channel(unsigned char channel_id, state::state_type* state_type, noise::noise_type* noise_type);
 
         quantum_channel* get_channel(unsigned char channel_id);
@@ -86,11 +91,6 @@ namespace gr {
         unsigned int create_managed_qudits(unsigned char channel_id, unsigned char* state);
 
         unsigned char projective_bell_measurement(unsigned char channel_id, unsigned int state_id);
-
-        // The mathematically defined mod function.
-        int mod(int a, int b);
-
-        unsigned int pick_weighted_number(double distribution[], unsigned int size);
 
        private:
         // Singleton functions.

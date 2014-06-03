@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -52,6 +52,7 @@ namespace gr {
           virtual void delete_state_element(unsigned int state_id) = 0;
           virtual std::vector<std::complex<double> > get_state_vector(unsigned int state_id) = 0;
           virtual std::vector<std::vector<std::complex<double> > > get_density_matrix(unsigned int state_id) = 0;
+          virtual bool is_vector_compatible() = 0;
         };
       } // namspace state
     } // namespace quantum_manager

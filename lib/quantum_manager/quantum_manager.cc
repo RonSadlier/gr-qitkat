@@ -108,11 +108,11 @@ namespace gr {
 
         // Used with our custom optimizations. If it is true after running through them, then we have done our work.
         // If it is false after running through our optimizations, we must manually perform the math.
-        bool opto_indicator = false;
+        bool optimize_indicator = false;
 
-        unsigned char return_state = noise::special_case_optimization::projective_bell_measurement(current_channel, state_id, opto_indicator);
+        unsigned char return_state = noise::special_case_optimization::projective_bell_measurement(current_channel, state_id, optimize_indicator);
 
-        if(!opto_indicator) {
+        if(!optimize_indicator) {
           // Check if we can use vector notation
           if(current_channel.state_type()->is_vector_compatible()) {
             // We can use the vector state
@@ -125,7 +125,7 @@ namespace gr {
 
           } else {
             // We have to use the density matrix
-            boost::numeric::ublas::matrix<std::complex<double> > original_state = current_channel.state_type()->get_density_matrix(state_id);
+            boost::numeric::ublas::matrix<std::complex<double> > state = current_channel.state_type()->get_density_matrix(state_id);
             current_channel.noise_type()->apply_noise(&state);
 
             // Perform projective measurement

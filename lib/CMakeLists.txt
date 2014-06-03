@@ -47,7 +47,8 @@ list(APPEND qitkat_sources
     quantum_manager/noise/special_case_optimization.cc
     quantum_manager/noise/binary_symmetric_channel.cc
     quantum_manager/noise/depolarizing.cc
-    quantum_manager_query_impl.cc )
+    quantum_manager_query_impl.cc
+    quantum_manager/noise/operators.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

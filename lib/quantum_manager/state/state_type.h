@@ -23,6 +23,7 @@
 
 #include <complex>
 #include <vector>
+#include <boost/numeric/ublas/matrix.hpp>
 
 namespace gr {
   namespace qitkat {
@@ -51,7 +52,7 @@ namespace gr {
           virtual unsigned int insert_state_element(const unsigned char* state) = 0;
           virtual void delete_state_element(unsigned int state_id) = 0;
           virtual std::vector<std::complex<double> > get_state_vector(unsigned int state_id) = 0;
-          virtual std::vector<std::vector<std::complex<double> > > get_density_matrix(unsigned int state_id) = 0;
+          virtual boost::numeric::ublas::matrix<std::complex<double> > get_density_matrix(unsigned int state_id) = 0;
           virtual bool is_vector_compatible() = 0;
         };
       } // namspace state

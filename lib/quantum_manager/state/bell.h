@@ -24,6 +24,7 @@
 #include "quantum_state.h"
 #include <complex>
 #include <vector>
+#include <boost/numeric/ublas/matrix.hpp>
 
 namespace gr {
   namespace qitkat {
@@ -51,7 +52,7 @@ namespace gr {
           std::vector<std::complex<double> > get_state_vector(unsigned int state_id);
 
           // Return the standardized density matrix.
-          std::vector<std::vector<std::complex<double> > > get_density_matrix(unsigned int state_id);
+          boost::numeric::ublas::matrix<std::complex<double> > get_density_matrix(unsigned int state_id);
         };
       } // namspace state
     } // namespace quantum_manager

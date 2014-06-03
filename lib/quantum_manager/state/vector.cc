@@ -1,17 +1,17 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2014 Ronald Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
@@ -20,8 +20,6 @@
 
 #include "vector.h"
 #include "state_type.h"
-
-using namespace std;
 
 namespace gr {
   namespace qitkat {
@@ -51,7 +49,7 @@ namespace gr {
           return this->states.at(state_id);
         }
 
-        std::vector<std::vector<std::complex<double> > > vector::get_density_matrix(unsigned int state_id) {
+        boost::numeric::ublas::matrix<std::complex<double> > vector::get_density_matrix(unsigned int state_id) {
           // TODO
         }
 

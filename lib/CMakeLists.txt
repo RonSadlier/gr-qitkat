@@ -38,17 +38,7 @@ list(APPEND qitkat_sources
     ecc_golay.cc
     ecc_golaytable.cc
     ecc_golay2412_encode_bb_impl.cc
-    ecc_golay2412_decode_bb_impl.cc
-    quantum_manager_query_impl.cc
-    quantum_manager/quantum_manager.cc
-    quantum_manager/quantum_manager_server.cc
-    quantum_manager/state/bell.cc
-    quantum_manager/state/vector.cc
-    quantum_manager/noise/special_case_optimization.cc
-    quantum_manager/noise/binary_symmetric_channel.cc
-    quantum_manager/noise/depolarizing.cc
-    quantum_manager_query_impl.cc
-    quantum_manager/noise/operators.cc )
+    ecc_golay2412_decode_bb_impl.cc)
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

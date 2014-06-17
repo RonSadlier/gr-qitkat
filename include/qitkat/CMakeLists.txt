@@ -34,6 +34,5 @@ install(FILES
     ecc_hamming74_decode_bb.h
     ecc_golay2412_encode_bb.h
     ecc_golay2412_decode_bb.h
-    quantum_manager_query.h
     DESTINATION include/qitkat
 )

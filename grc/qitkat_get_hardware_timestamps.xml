@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<block>
+  <name>get_hardware_timestamps</name>
+  <key>qitkat_get_hardware_timestamps</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.get_hardware_timestamps($address, $port)</make>
+  <param>
+    <name>Address</name>
+    <key>address</key>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Port</name>
+    <key>port</key>
+    <type>int</type>
+  </param>
+  <source>
+    <name>out</name>
+    <type>byte</type>
+  </source>
+</block>

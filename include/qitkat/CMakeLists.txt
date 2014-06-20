@@ -34,5 +34,5 @@ install(FILES
     ecc_hamming74_decode_bb.h
     ecc_golay2412_encode_bb.h
     ecc_golay2412_decode_bb.h
-    get_hardware_timestamps.h DESTINATION include/qitkat
+    get_hardware_data.h DESTINATION include/qitkat
 )

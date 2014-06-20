@@ -20,7 +20,7 @@
 #include "qitkat/ecc_hamming74_decode_bb.h"
 #include "qitkat/ecc_golay2412_encode_bb.h"
 #include "qitkat/ecc_golay2412_decode_bb.h"
-#include "qitkat/get_hardware_timestamps.h"
+#include "qitkat/get_hardware_data.h"
 %}
 
 
@@ -48,5 +48,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_hamming74_decode_bb);
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_encode_bb);
 %include "qitkat/ecc_golay2412_decode_bb.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_decode_bb);
-%include "qitkat/get_hardware_timestamps.h"
-GR_SWIG_BLOCK_MAGIC2(qitkat, get_hardware_timestamps);
+%include "qitkat/get_hardware_data.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, get_hardware_data);

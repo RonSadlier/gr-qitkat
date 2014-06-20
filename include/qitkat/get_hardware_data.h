@@ -19,8 +19,8 @@
  */
 
 
-#ifndef INCLUDED_QITKAT_GET_HARDWARE_TIMESTAMPS_H
-#define INCLUDED_QITKAT_GET_HARDWARE_TIMESTAMPS_H
+#ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_H
+#define INCLUDED_QITKAT_GET_HARDWARE_DATA_H
 
 #include <qitkat/api.h>
 #include <gnuradio/sync_block.h>
@@ -30,20 +30,20 @@ namespace gr {
   namespace qitkat {
 
     /*!
-     * \brief Listen for timestamps from our hardware.
+     * \brief Listen for data from our hardware.
      * \ingroup qitkat
      *
      */
-    class QITKAT_API get_hardware_timestamps : virtual public gr::sync_block {
+    class QITKAT_API get_hardware_data : virtual public gr::sync_block {
      public:
-      typedef boost::shared_ptr<get_hardware_timestamps> sptr;
+      typedef boost::shared_ptr<get_hardware_data> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_timestamps.
+       * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_data.
        *
-       * To avoid accidental use of raw pointers, qitkat::get_hardware_timestamps's
+       * To avoid accidental use of raw pointers, qitkat::get_hardware_data's
        * constructor is in a private implementation
-       * class. qitkat::get_hardware_timestamps::make is the public interface for
+       * class. qitkat::get_hardware_datas::make is the public interface for
        * creating new instances.
        */
       static sptr make(std::string address, unsigned short port);
@@ -52,5 +52,5 @@ namespace gr {
   } // namespace qitkat
 } // namespace gr
 
-#endif /* INCLUDED_QITKAT_GET_HARDWARE_TIMESTAMPS_H */
+#endif /* INCLUDED_QITKAT_GET_HARDWARE_DATA_H */
 

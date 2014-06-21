@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<block>
+  <name>Filter Timestamps</name>
+  <key>qitkat_filter_timestamps</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.filter_timestamps()</make>
+  <sink>
+    <name>in</name>
+    <type>byte</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>byte</type>
+  </source>
+</block>

@@ -18,39 +18,29 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_QITKAT_FILTER_TIMESTAMPS_IMPL_H
+#define INCLUDED_QITKAT_FILTER_TIMESTAMPS_IMPL_H
 
-#ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_H
-#define INCLUDED_QITKAT_GET_HARDWARE_DATA_H
-
-#include <qitkat/api.h>
-#include <gnuradio/sync_block.h>
-#include <string>
+#include <qitkat/filter_timestamps.h>
 
 namespace gr {
   namespace qitkat {
 
-    /*!
-     * \brief Listen for data from our hardware.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API get_hardware_data : virtual public gr::sync_block {
+    class filter_timestamps_impl : public filter_timestamps {
      public:
-      typedef boost::shared_ptr<get_hardware_data> sptr;
+      filter_timestamps_impl();
+      ~filter_timestamps_impl();
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_data.
-       *
-       * To avoid accidental use of raw pointers, qitkat::get_hardware_data's
-       * constructor is in a private implementation
-       * class. qitkat::get_hardware_datas::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(std::string address, unsigned short port);
+      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
+
+      int general_work(int noutput_items,
+		       gr_vector_int &ninput_items,
+		       gr_vector_const_void_star &input_items,
+		       gr_vector_void_star &output_items);
     };
 
   } // namespace qitkat
 } // namespace gr
 
-#endif /* INCLUDED_QITKAT_GET_HARDWARE_DATA_H */
+#endif /* INCLUDED_QITKAT_FILTER_TIMESTAMPS_IMPL_H */
 

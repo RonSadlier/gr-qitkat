@@ -19,38 +19,37 @@
  */
 
 
-#ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_H
-#define INCLUDED_QITKAT_GET_HARDWARE_DATA_H
+#ifndef INCLUDED_QITKAT_FILTER_TIMESTAMPS_H
+#define INCLUDED_QITKAT_FILTER_TIMESTAMPS_H
 
 #include <qitkat/api.h>
-#include <gnuradio/sync_block.h>
-#include <string>
+#include <gnuradio/block.h>
 
 namespace gr {
   namespace qitkat {
 
     /*!
-     * \brief Listen for data from our hardware.
+     * \brief Remove all data except raw timestamps.
      * \ingroup qitkat
      *
      */
-    class QITKAT_API get_hardware_data : virtual public gr::sync_block {
+    class QITKAT_API filter_timestamps : virtual public gr::block {
      public:
-      typedef boost::shared_ptr<get_hardware_data> sptr;
+      typedef boost::shared_ptr<filter_timestamps> sptr;
 
       /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_data.
+       * \brief Return a shared_ptr to a new instance of qitkat::filter_timestamps.
        *
-       * To avoid accidental use of raw pointers, qitkat::get_hardware_data's
+       * To avoid accidental use of raw pointers, qitkat::filter_timestamps's
        * constructor is in a private implementation
-       * class. qitkat::get_hardware_datas::make is the public interface for
+       * class. qitkat::filter_timestamps::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::string address, unsigned short port);
+      static sptr make();
     };
 
   } // namespace qitkat
 } // namespace gr
 
-#endif /* INCLUDED_QITKAT_GET_HARDWARE_DATA_H */
+#endif /* INCLUDED_QITKAT_FILTER_TIMESTAMPS_H */
 

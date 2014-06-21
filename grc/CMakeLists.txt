@@ -29,5 +29,6 @@ install(FILES
     qitkat_ecc_hamming74_decode_bb.xml
     qitkat_ecc_golay2412_encode_bb.xml
     qitkat_ecc_golay2412_decode_bb.xml
-    qitkat_get_hardware_data.xml DESTINATION share/gnuradio/grc/blocks
+    qitkat_get_hardware_data.xml
+    qitkat_filter_timestamps.xml DESTINATION share/gnuradio/grc/blocks
 )

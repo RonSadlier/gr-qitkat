@@ -21,6 +21,7 @@
 #include "qitkat/ecc_golay2412_encode_bb.h"
 #include "qitkat/ecc_golay2412_decode_bb.h"
 #include "qitkat/get_hardware_data.h"
+#include "qitkat/filter_timestamps.h"
 %}
 
 
@@ -50,3 +51,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_encode_bb);
 GR_SWIG_BLOCK_MAGIC2(qitkat, ecc_golay2412_decode_bb);
 %include "qitkat/get_hardware_data.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, get_hardware_data);
+%include "qitkat/filter_timestamps.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, filter_timestamps);

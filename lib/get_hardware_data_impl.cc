@@ -76,12 +76,12 @@ namespace gr {
 
         size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+3, body_size));
 
-        unsigned char* timestamps = &buffer[3];
-
-        // TODO: Process timestamps
+        // We'll probably need to be more sophisticated here in the future,
+        // but for right now this is ok.
+        memcpy(out, buffer+3, read_body_size);
 
         // Tell runtime system how many output items we produced.
-        return noutput_items;
+        return (body_size / 8);
     }
 
   } /* namespace qitkat */

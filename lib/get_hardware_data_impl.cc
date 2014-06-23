@@ -69,19 +69,20 @@ namespace gr {
 			  gr_vector_void_star &output_items) {
         unsigned char *out = (unsigned char*) output_items[0];
 
-        memset(buffer, 0, MAX_PACKET_SIZE);
         size_t read_header_size = boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
 
-        unsigned int body_size = (buffer[2] << 16) + (buffer[1] << 8) + buffer[0];
+        // Number of packets
+        unsigned int body_count = (buffer[2] << 16) + (buffer[1] << 8) + buffer[0];
+        const unsigned int packet_size = 64; // bytes
 
-        size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+3, body_size));
+        size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*packet_size));
 
         // We'll probably need to be more sophisticated here in the future,
         // but for right now this is ok.
         memcpy(out, buffer+3, read_body_size);
 
         // Tell runtime system how many output items we produced.
-        return (body_size / 8);
+        return (read_body_size);
     }
 
   } /* namespace qitkat */

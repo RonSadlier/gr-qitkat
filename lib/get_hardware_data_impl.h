@@ -21,8 +21,8 @@
 #ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_IMPL_H
 #define INCLUDED_QITKAT_GET_HARDWARE_DATA_IMPL_H
 
-#define MAX_PACKET_SIZE 256
-#define PACKET_HEADER_SIZE 3
+#define MAX_PACKET_SIZE 16384 // Bytes
+#define PACKET_HEADER_SIZE 3 // Bytes
 
 #include <qitkat/get_hardware_data.h>
 #include <string>

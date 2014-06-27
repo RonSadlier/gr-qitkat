@@ -50,17 +50,23 @@ namespace gr {
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
-        const unsigned char *in = (const unsigned char *) input_items[0];
-        unsigned char *out = (unsigned char *) output_items[0];
+      const unsigned char *in = (const unsigned char *) input_items[0];
+      unsigned char *out = (unsigned char *) output_items[0];
 
-        // Do <+signal processing+>
+      unsigned int outpos = 0;
 
-        // Tell runtime system how many input items we consumed on
-        // each input stream.
-        consume_each (noutput_items);
+      for(unsigned int j = 1; j < 7; j++) {
+          out[outpos] = in[j];
+          outpos++;
+      }
 
-        // Tell runtime system how many output items we produced.
-        return noutput_items;
+      // Tell runtime system how many input items we consumed on
+      // each input stream.
+      //consume_each ((int)(noutput_items/8)*8);
+      consume_each(8);
+
+      // Tell runtime system how many output items we produced.
+      return outpos;
     }
 
   } /* namespace qitkat */

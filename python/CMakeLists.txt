@@ -55,3 +55,4 @@ GR_ADD_TEST(qa_ecc_golay2412_encode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOUR
 GR_ADD_TEST(qa_ecc_golay2412_decode_bb ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_ecc_golay2412_decode_bb.py)
 GR_ADD_TEST(qa_get_hardware_data ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_get_hardware_data.py)
 GR_ADD_TEST(qa_filter_timestamps ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_filter_timestamps.py)
+GR_ADD_TEST(qa_send_hardware_data ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_send_hardware_data.py)

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<block>
+  <name>Send Hardware Data</name>
+  <key>qitkat_send_hardware_data</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.send_hardware_data($address, $port)</make>
+  <param>
+    <name>Address</name>
+    <key>address</key>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Port</name>
+    <key>port</key>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>out</name>
+    <type>byte</type>
+  </sink>
+</block>

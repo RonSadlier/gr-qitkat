@@ -23,6 +23,7 @@
 
 #define MAX_PACKET_SIZE 16384 // Bytes
 #define PACKET_HEADER_SIZE 3 // Bytes
+#define ITEM_SIZE 8 // Bytes
 
 #include <qitkat/get_hardware_data.h>
 #include <string>

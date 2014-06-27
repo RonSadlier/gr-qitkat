@@ -67,22 +67,24 @@ namespace gr {
     int get_hardware_data_impl::work(int noutput_items,
 			  gr_vector_const_void_star &input_items,
 			  gr_vector_void_star &output_items) {
-        unsigned char *out = (unsigned char*) output_items[0];
 
-        size_t read_header_size = boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
+      unsigned char *out = (unsigned char*) output_items[0];
 
-        // Number of packets
-        unsigned int body_count = (buffer[2] << 16) + (buffer[1] << 8) + buffer[0];
-        const unsigned int packet_size = 64; // bytes
+      memset(buffer, 0, MAX_PACKET_SIZE);
 
-        size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*packet_size));
+      size_t read_header_size = boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
 
-        // We'll probably need to be more sophisticated here in the future,
-        // but for right now this is ok.
-        memcpy(out, buffer+3, read_body_size);
+      // Number of packets
+      unsigned int body_count = buffer[0] + (buffer[1] << 8) + (buffer[2] << 16);
 
-        // Tell runtime system how many output items we produced.
-        return (read_body_size);
+      size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE));
+
+      // We'll probably need to be more sophisticated here in the future,
+      // but for right now this is ok.
+      memcpy(out, buffer+PACKET_HEADER_SIZE , read_body_size);
+
+      // Tell runtime system how many output items we produced.
+      return (read_body_size);
     }
 
   } /* namespace qitkat */

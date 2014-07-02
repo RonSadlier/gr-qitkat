@@ -70,21 +70,29 @@ namespace gr {
 
       unsigned char *out = (unsigned char*) output_items[0];
 
-      memset(buffer, 0, MAX_PACKET_SIZE);
-
       size_t read_header_size = boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
 
       // Number of packets
-      unsigned int body_count = buffer[0] + (buffer[1] << 8) + (buffer[2] << 16);
+      unsigned int body_count = 0;
+      unsigned char* body_count_p = (unsigned char*)&body_count;
+      body_count_p[0] = buffer[0];
+      body_count_p[1] = buffer[1];
+      body_count_p[2] = buffer[2];
 
-      size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE));
+      if(body_count > 1) {
+        size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE));
+        // We'll probably need to be more sophisticated here in the future,
+        // but for right now this is ok.
+        noutput_items = read_body_size;
+        memcpy(out, buffer+PACKET_HEADER_SIZE, read_body_size);
 
-      // We'll probably need to be more sophisticated here in the future,
-      // but for right now this is ok.
-      memcpy(out, buffer+PACKET_HEADER_SIZE , read_body_size);
-
-      // Tell runtime system how many output items we produced.
-      return (read_body_size);
+        // Tell runtime system how many output items we produced.
+        return read_body_size;
+      } else {
+        // TODO
+        std::cerr << "No data received.";
+        exit(-1);
+      }
     }
 
   } /* namespace qitkat */

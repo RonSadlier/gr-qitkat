@@ -83,9 +83,9 @@ namespace gr {
         size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE));
         // We'll probably need to be more sophisticated here in the future,
         // but for right now this is ok.
-        memcpy(out, buffer+PACKET_HEADER_SIZE, body_count);
+        memcpy(out, buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE);
         // Tell runtime system how many output items we produced.
-        return body_count;
+        return body_count*ITEM_SIZE;
       } else {
         // TODO
         std::cerr << "No data received.";

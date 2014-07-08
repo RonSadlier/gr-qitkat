@@ -31,5 +31,6 @@ install(FILES
     qitkat_ecc_golay2412_decode_bb.xml
     qitkat_get_hardware_data.xml
     qitkat_filter_timestamps.xml
-    qitkat_send_hardware_data.xml DESTINATION share/gnuradio/grc/blocks
+    qitkat_send_hardware_data.xml
+    qitkat_extract_hardware_sdc.xml DESTINATION share/gnuradio/grc/blocks
 )

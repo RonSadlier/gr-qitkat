@@ -36,5 +36,6 @@ install(FILES
     ecc_golay2412_decode_bb.h
     get_hardware_data.h
     filter_timestamps.h
-    send_hardware_data.h DESTINATION include/qitkat
+    send_hardware_data.h
+    extract_hardware_sdc.h DESTINATION include/qitkat
 )

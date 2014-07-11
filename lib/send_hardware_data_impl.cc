@@ -60,6 +60,8 @@ namespace gr {
      * Our virtual destructor.
      */
     send_hardware_data_impl::~send_hardware_data_impl() {
+      s.shutdown(tcp::socket::shutdown_both);
+      s.close();
     }
 
     int send_hardware_data_impl::work(int noutput_items,
@@ -72,10 +74,9 @@ namespace gr {
       unsigned char* body_count_p = (unsigned char*)&body_count;
 
       if(noutput_items*ITEM_SIZE + PACKET_HEADER_SIZE > MAX_PACKET_SIZE) {
-        // TODO
-        body_count = (int)(MAX_PACKET_SIZE/ITEM_SIZE);
+        body_count = (int)((MAX_PACKET_SIZE-PACKET_HEADER_SIZE)/ITEM_SIZE);
       } else {
-       body_count = noutput_items;
+        body_count = noutput_items;
       }
       buffer[0] = body_count_p[0];
       buffer[1] = body_count_p[1];

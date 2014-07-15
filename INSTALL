@@ -1,0 +1,10 @@
+Ensure that you've satisfied external dependencies.
+
+Building from cmake:
+
+$ mkdir build
+$ cd build
+$ cmake ../
+$ make
+$ make test
+$ sudo make install

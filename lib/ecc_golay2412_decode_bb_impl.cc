@@ -44,7 +44,7 @@ namespace gr {
     }
 
     void ecc_golay2412_decode_bb_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-        ninput_items_required[0] = 3;
+        ninput_items_required[0] = 6*noutput_items;
     }
 
     int ecc_golay2412_decode_bb_impl::general_work (int noutput_items,

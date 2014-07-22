@@ -1,4 +1,4 @@
-Ensure that you've satisfied external dependencies.
+Ensure that you've installed GNU Radio and gr-qitkat should be ready to build. We only need the dependencies that GNU Radio requires.
 
 Building from cmake:
 

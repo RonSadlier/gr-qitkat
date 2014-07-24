@@ -48,10 +48,10 @@ namespace gr {
     }
 
     void extract_hardware_sdc_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-      ninput_items_required[0] = 8;
+      ninput_items_required[0] = 8*noutput_items;
     }
 
-    int extract_hardware_sdc_impl::general_work (int noutput_items,
+    int extract_hardware_sdc_impl::general_work(int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
@@ -61,9 +61,8 @@ namespace gr {
       unsigned int output_pos = 0;
 
       // Deal with whole events, 8 bytes at a time.
-      // TODO: Remove magic number
-      // FIXME: Put everything back in loop
-      /*for(int i = 0; i < (int)(noutput_items/8); i+=8) {
+      // TODO: Remove magic number 8
+      for(int i = 0; i < noutput_items; i+=8) {
         // We really only care about the last byte though
         if(in[i+7] == 17) {
           out[output_pos] = 0;
@@ -80,27 +79,11 @@ namespace gr {
         } else {
           std::cerr << "Unknown input state on extract hardware sdc";
         }
-      }*/
-
-        if(in[7] == 17) {
-          out[output_pos] = 0;
-          output_pos++;
-        } else if(in[7] == 64) {
-          out[output_pos] = 1;
-          output_pos++;
-        } else if(in[7] == 68) {
-          out[output_pos] = 2;
-          output_pos++;
-        } else if(in[7] == 136){
-          out[output_pos] = 3;
-          output_pos++;
-        } else {
-          std::cerr << "Unknown input state on extract hardware sdc";
-        }
+      }
 
       // Tell runtime system how many input items we consumed on
       // each input stream.
-      consume_each(8*output_pos);
+      consume_each(output_pos*8);
 
       // Tell runtime system how many output items we produced.
       return output_pos;

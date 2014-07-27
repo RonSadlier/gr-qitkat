@@ -59,15 +59,19 @@ namespace gr {
       // LCM is always divisible by 8, so this is OK. (Needed for a few lower dimensional cases).
       d_num_flags_required = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / d_num_bits_encoded;
 
-      // Instead of using forecast, we just care about the multiple of noutput_items.
-      set_output_multiple(d_num_flags_required);
-
       // The number of bytes generated each iteration.
       // LCM is always divisible by n, so this is OK. (Needed for a few lower dimensional cases).
       d_num_bytes_output = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / (unsigned char)8;
+      
+      // We can only produce output in blocks.
+      set_output_multiple(d_num_bytes_output);
     }
 
     sdc_decode_bb_impl::~sdc_decode_bb_impl() {
+    }
+    
+    void sdc_decode_bb_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
+      ninput_items_required[0] = (noutput_items/d_num_bytes_output)*d_num_flags_required;
     }
 
     int sdc_decode_bb_impl::general_work (int noutput_items,
@@ -78,9 +82,10 @@ namespace gr {
       unsigned char *out = (unsigned char *) output_items[0];
 
       // The absolute position within the output stream
+      int inPos = 0;
       int outPos = 0;
     
-      for(int inPos = 0; inPos < noutput_items; inPos += d_num_flags_required) {
+      while(outPos < noutput_items) {
         // The input flag we are currently on. This is within our current cluster within the stream.
         unsigned char current_input_flag = 0;
 
@@ -111,16 +116,15 @@ namespace gr {
           // Move on to the next output flag.
           current_input_flag++;
         }
-
         outPos += d_num_bytes_output;
+        inPos += d_num_flags_required;
       }
 
-      // Tell runtime system how many input items we consumed on
-      // each input stream.
-      consume_each(noutput_items);
+      // Tell runtime system how many input items we consumed on each input stream.
+      consume_each(inPos);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items/d_num_flags_required*d_num_bytes_output;
+      return noutput_items;
     }
   } /* namespace qitkat */
 } /* namespace gr */

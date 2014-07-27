@@ -58,17 +58,21 @@ namespace gr {
       // The number of bytes required each iteration.
       d_num_bytes_required = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / 8;
 
-      // Instead of using forecast, we just care about the multiple of noutput_items.
-      set_output_multiple(d_num_bytes_required);
-
       // The number of items generated each iteration.
       d_num_flags_output = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / d_num_bits_encoded;
+      
+      // We can only produce output in blocks.
+      set_output_multiple(d_num_flags_output);
 
       // Set our bitmask.
       d_bitmask = (unsigned char)(pow(2., 1.*d_num_bits_encoded) - 1.0);
     }
 
     sdc_encode_bb_impl::~sdc_encode_bb_impl() {
+    }
+    
+    void sdc_encode_bb_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
+      ninput_items_required[0] = (noutput_items/d_num_flags_output)*d_num_bytes_required;
     }
 
     int sdc_encode_bb_impl::general_work(int noutput_items,
@@ -90,8 +94,9 @@ namespace gr {
 
       // The absolute position within the output stream
       int outPos = 0;
+      int inPos = 0;
       
-      for(int inPos = 0; inPos < noutput_items; inPos += d_num_bytes_required) {
+      while(outPos < noutput_items) {
         // The current input byte, counting down. This is within our current cluster within the stream.
         char current_input_byte = d_num_bytes_required-1;
 
@@ -123,13 +128,14 @@ namespace gr {
           current_output_flag++;
         }
         outPos += d_num_flags_output;
+        inPos += d_num_bytes_required;
       }
 
       // Tell runtime system how many input items we consumed on each input stream.
-      consume_each(noutput_items);
+      consume_each(inPos);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items/d_num_bytes_required*d_num_flags_output;
+      return noutput_items;
     }
   } /* namespace qitkat */
 } /* namespace gr */

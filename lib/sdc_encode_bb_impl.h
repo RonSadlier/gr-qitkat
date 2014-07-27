@@ -51,6 +51,8 @@ namespace gr {
       sdc_encode_bb_impl(int n);
       
       ~sdc_encode_bb_impl();
+      
+      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
 
       int general_work(int noutput_items,
 		       gr_vector_int &ninput_items,

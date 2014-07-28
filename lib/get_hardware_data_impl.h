@@ -45,6 +45,7 @@ namespace gr {
       std::string d_address;
       unsigned short d_port;
       unsigned char buffer[MAX_PACKET_SIZE];
+      unsigned int buffer_size;
       boost::asio::io_service io_service;
       boost::asio::ip::tcp::resolver resolver;
       boost::asio::ip::tcp::resolver::query query;

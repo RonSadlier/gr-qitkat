@@ -27,6 +27,8 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <algorithm>
+
 using namespace std;
 using boost::asio::ip::tcp;
 
@@ -37,9 +39,6 @@ namespace gr {
       return gnuradio::get_initial_sptr(new get_hardware_data_impl(address, port));
     }
 
-    /*
-     * The private constructor
-     */
     get_hardware_data_impl::get_hardware_data_impl(string address, unsigned short port)
       : gr::sync_block("get_hardware_data",
               gr::io_signature::make(0, 0, 0),
@@ -47,6 +46,7 @@ namespace gr {
               query(tcp::v4(), d_address, boost::lexical_cast<string>(d_port)), iterator(resolver.resolve(query)), s(io_service) {
 
       memset(buffer, 0, MAX_PACKET_SIZE);
+      buffer_size = 0;
 
       // Try to connect to the server
       try {
@@ -58,9 +58,6 @@ namespace gr {
 
     }
 
-    /*
-     * Our virtual destructor.
-     */
     get_hardware_data_impl::~get_hardware_data_impl() {
     }
 
@@ -69,27 +66,57 @@ namespace gr {
 			  gr_vector_void_star &output_items) {
 
       unsigned char *out = (unsigned char*) output_items[0];
+      
+      if(buffer_size != 0) {
+        if(buffer_size > noutput_items) {
+          memcpy(out, buffer, noutput_items);
+          for(int i = noutput_items; i < buffer_size; i++) {
+            buffer[i - noutput_items] = buffer[i];
+          }
+          buffer_size -= noutput_items;
+          return noutput_items;
+        } else {
+          memcpy(out, buffer, buffer_size);
+          int temp = buffer_size;
+          buffer_size = 0;
 
-      size_t read_header_size = boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
-
-      // Number of packets
-      unsigned int body_count = 0;
-      unsigned char* body_count_p = (unsigned char*)&body_count;
-      body_count_p[0] = buffer[0];
-      body_count_p[1] = buffer[1];
-      body_count_p[2] = buffer[2];
-
-      if(body_count > 1) {
-        size_t read_body_size = boost::asio::read(s, boost::asio::buffer(buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE));
-        // We'll probably need to be more sophisticated here in the future,
-        // but for right now this is ok.
-        memcpy(out, buffer+PACKET_HEADER_SIZE, body_count*ITEM_SIZE);
-        // Tell runtime system how many output items we produced.
-        return body_count*ITEM_SIZE;
+          return temp;
+        }
       } else {
-        // TODO
-        std::cerr << "No data received.";
-        exit(-1);
+        // We have nothing in our buffer
+        try {
+          boost::asio::read(s, boost::asio::buffer(buffer, PACKET_HEADER_SIZE));
+        } catch (std::exception& e) {
+          // Timeout from our server not sending anything
+          return -1;
+        }
+
+        // Number of units in packet
+        int body_count = (int)buffer[0] + ((int)buffer[1] << 8) + ((int)buffer[2] << 16);
+
+        if(body_count > 1) {
+          buffer_size = boost::asio::read(s, boost::asio::buffer(buffer, body_count*ITEM_SIZE));
+          
+          if(buffer_size > noutput_items) {
+            memcpy(out, buffer, noutput_items);
+            for(int i = noutput_items; i < buffer_size; i++) {
+              buffer[i - noutput_items] = buffer[i];
+            }
+            buffer_size -= noutput_items;
+
+            return noutput_items;
+          } else {
+            memcpy(out, buffer, buffer_size);
+            int temp = buffer_size;
+            buffer_size = 0;
+
+            return temp;
+          }
+        } else {
+          // TODO
+          std::cerr << "No data received.";
+          exit(-1);
+        }
       }
     }
 

@@ -83,12 +83,7 @@ namespace gr {
       buffer[2] = body_count_p[2];
 
       for(unsigned int i = 0; i < body_count; i++) {
-        if(in[i] > 3) {
-          cerr << "Unknown SDC Flag on input";
-          exit(-1);
-        } else {
-          buffer[PACKET_HEADER_SIZE+i] = in[i];
-        }
+        buffer[PACKET_HEADER_SIZE+i] = in[i];
       }
 
       boost::asio::write(s, boost::asio::buffer(buffer, body_count*ITEM_SIZE + PACKET_HEADER_SIZE));

@@ -18,6 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#define UNIT_SIZE 8 // bytes
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -32,37 +34,25 @@ namespace gr {
       return gnuradio::get_initial_sptr(new extract_hardware_sdc_impl());
     }
 
-    /*
-     * The private constructor
-     */
     extract_hardware_sdc_impl::extract_hardware_sdc_impl()
-      : gr::block("extract_hardware_sdc",
+      : gr::sync_decimator("extract_hardware_sdc",
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char))) {
+              gr::io_signature::make(1, 1, sizeof(unsigned char)), UNIT_SIZE) {
     }
 
-    /*
-     * Our virtual destructor.
-     */
     extract_hardware_sdc_impl::~extract_hardware_sdc_impl() {
     }
 
-    void extract_hardware_sdc_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-      ninput_items_required[0] = 8*noutput_items;
-    }
-
-    int extract_hardware_sdc_impl::general_work(int noutput_items,
-                       gr_vector_int &ninput_items,
-                       gr_vector_const_void_star &input_items,
-                       gr_vector_void_star &output_items) {
+    int extract_hardware_sdc_impl::work(int noutput_items,
+			  gr_vector_const_void_star &input_items,
+			  gr_vector_void_star &output_items) {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
       unsigned int output_pos = 0;
 
-      // Deal with whole events, 8 bytes at a time.
-      // TODO: Remove magic number 8
-      for(int i = 0; i < noutput_items; i+=8) {
+      // Deal with whole events, UNIT_SIZE bytes at a time.
+      for(int i = 0; i < noutput_items*UNIT_SIZE; i+=UNIT_SIZE) {
         // We really only care about the last byte though
         if(in[i+7] == 17) {
           out[output_pos] = 0;
@@ -81,12 +71,8 @@ namespace gr {
         }
       }
 
-      // Tell runtime system how many input items we consumed on
-      // each input stream.
-      consume_each(output_pos*8);
-
       // Tell runtime system how many output items we produced.
-      return output_pos;
+      return noutput_items;
     }
 
   } /* namespace qitkat */

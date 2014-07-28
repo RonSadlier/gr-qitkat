@@ -23,7 +23,7 @@
 #define INCLUDED_QITKAT_EXTRACT_HARDWARE_SDC_H
 
 #include <qitkat/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/sync_decimator.h>
 
 namespace gr {
   namespace qitkat {
@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API extract_hardware_sdc : virtual public gr::block {
+    class QITKAT_API extract_hardware_sdc : virtual public gr::sync_decimator {
      public:
       typedef boost::shared_ptr<extract_hardware_sdc> sptr;
 

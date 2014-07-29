@@ -113,8 +113,7 @@ namespace gr {
             return temp;
           }
         } else {
-          // TODO
-          std::cerr << "No data received.";
+          std::cerr << "No data received although a header was.";
           exit(-1);
         }
       }

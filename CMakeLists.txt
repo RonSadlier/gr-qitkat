@@ -39,9 +39,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     #http://gcc.gnu.org/wiki/Visibility
-    # TODO: This was commented out to export the quantum simulation server.
-    # Eventually, a workaround needs to be made.
-    #add_definitions(-fvisibility=hidden)
+    add_definitions(-fvisibility=hidden)
 endif()
 
 ########################################################################

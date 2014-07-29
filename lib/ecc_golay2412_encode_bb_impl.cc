@@ -37,6 +37,7 @@ namespace gr {
       : gr::block("ecc_golay2412_encode_bb",
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
               gr::io_signature::make(1, 1, sizeof(unsigned char))) {
+      set_output_multiple(6);
     }
 
     ecc_golay2412_encode_bb_impl::~ecc_golay2412_encode_bb_impl() {
@@ -53,9 +54,10 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
-      unsigned int outputPos = 0;
+      unsigned int inPos = 0;
+      unsigned int outPos = 0;
 
-      for(int i = 0; i < noutput_items; i+=3) {
+      while(inPos < noutput_items*3) {
         // This are temporary holders for two halfs of 24 bits
         unsigned long firstPart = 0;
         unsigned char* pFirstPart = (unsigned char*)&firstPart;
@@ -63,11 +65,11 @@ namespace gr {
         unsigned char* pSecondPart = (unsigned char*)&secondPart;	
 
         // We can only convert 12 bits at a time, so we have to pack them properly
-        pFirstPart[0] = in[i]; // 8 Bits
-        pFirstPart[1] = in[i+1] & 0x0F; // 12 Bits 
-        pSecondPart[0] = (in[i+1] & 0xF0) >> 4; // 4 Bits
-        pSecondPart[0] += (in[i+2] & 0x0F) << 4; // 8 Bits
-        pSecondPart[1] = (in[i+2] & 0xF0) >> 4; // 12 Bits
+        pFirstPart[0] = in[inPos]; // 8 Bits
+        pFirstPart[1] = in[inPos+1] & 0x0F; // 12 Bits 
+        pSecondPart[0] = (in[inPos+1] & 0xF0) >> 4; // 4 Bits
+        pSecondPart[0] += (in[inPos+2] & 0x0F) << 4; // 8 Bits
+        pSecondPart[1] = (in[inPos+2] & 0xF0) >> 4; // 12 Bits
 
         // We encode each 12 bit input to a 24 bit output
         unsigned long encoded1 = golay_encode(firstPart);
@@ -76,19 +78,20 @@ namespace gr {
         unsigned char* pEncoded2 = (unsigned char*)&encoded2;
 
         // Unpack our encoded bits
-        out[outputPos] = pEncoded1[0]; // 8 Bits
-        out[outputPos+1] = pEncoded1[1]; // 16 Bits
-        out[outputPos+2] = pEncoded1[2]; // 24 Bits
-        out[outputPos+3] = pEncoded2[0]; // 8 Bits
-        out[outputPos+4] = pEncoded2[1]; // 16 Bits
-        out[outputPos+5] = pEncoded2[2]; // 24 Bits
-        outputPos += 6;
+        out[outPos] = pEncoded1[0]; // 8 Bits
+        out[outPos+1] = pEncoded1[1]; // 16 Bits
+        out[outPos+2] = pEncoded1[2]; // 24 Bits
+        out[outPos+3] = pEncoded2[0]; // 8 Bits
+        out[outPos+4] = pEncoded2[1]; // 16 Bits
+        out[outPos+5] = pEncoded2[2]; // 24 Bits
+        inPos += 3;
+        outPos += 6;
       }
       // Consume each input byte
-      consume_each(noutput_items);
+      consume_each(inPos);
 
       // We have items available for the scheduler.
-      return noutput_items*2;
+      return outPos;
     }
 
   } /* namespace qitkat */

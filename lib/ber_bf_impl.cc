@@ -24,6 +24,9 @@
 
 #include <gnuradio/io_signature.h>
 #include "ber_bf_impl.h"
+#include <bitset>
+
+using namespace std;
 
 namespace gr {
   namespace qitkat {
@@ -43,7 +46,7 @@ namespace gr {
       d_bit_mask = bit_mask;
 
       // Calculate size of d_bit_mask.
-      d_bit_mask_len = std::bitset<8>(d_bit_mask).count();
+      d_bit_mask_len = bitset<8>(d_bit_mask).count();
     }
 
     ber_bf_impl::~ber_bf_impl() {
@@ -64,7 +67,7 @@ namespace gr {
 
         // Calculate BER over frame length
         for(int j = 0; j < d_num_items; j++) {
-          ber += std::bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
+          ber += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
         }
 
         // Multiply by number of encoded bits per item to get correct statistics

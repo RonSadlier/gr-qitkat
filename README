@@ -22,7 +22,19 @@ Oak Ridge National Laboratory
 U. S. Department of Energy
 
 Installation:
-See file INSTALL for more information
+We do not require any dependencies other than those for GNU Radio.
+
+Like GNU Radio, we use CMake. A typical installation process looks like
+the following:
+
+$ mkdir build
+$ cd build
+$ cmake ../
+$ make
+$ make test
+$ sudo make install
 
 Known Issues:
-- The block ecc_repetition_decode seems to drop samples for k>7.
+- The block ecc_repetition_decode seems to drop samples for k>7. A
+  work around for this issue is to manually set the buffer size of the
+  sdc_decode block in the flowgraph.

@@ -1,4 +1,11 @@
-It is considered good practice to add examples in here to demonstrate the
-functionality of your OOT module. Python scripts, GRC flow graphs or other
-code can go here.
+Example 1
+In this example, we demonstrate the super-dense coding (SDC) encoding blocks. Alice reads in
+a file, encodes it with our SDC flags, then writes these flags to file.
+Bob reads in this file, decodes it back to the original file Alice read
+in.
 
+Example 2
+In this example, we demonstrate how a binary symmetric channel affects
+the bit error rate (BER) of the transmitted data. By adjusting the error
+rate between 0 and 1.0 we simulate various levels of channel noise
+between Alice and Bob.

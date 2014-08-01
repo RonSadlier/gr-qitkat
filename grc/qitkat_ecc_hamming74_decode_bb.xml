@@ -2,7 +2,7 @@
 <block>
   <name>Hamming74 Decode</name>
   <key>qitkat_ecc_hamming74_decode_bb</key>
-  <category>qitkat.ecc</category>
+  <category>qitkat</category>
   <import>import qitkat</import>
   <make>qitkat.ecc_hamming74_decode_bb()</make>
   <sink>

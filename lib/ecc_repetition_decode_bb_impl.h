@@ -30,9 +30,9 @@ namespace gr {
      private:
       // The number of times something was repeated.
       unsigned int d_repetition;
-
-      // A count for each possible incoming byte value, with the index representing the byte value.
-      unsigned char d_byte_value_count[256];
+      
+      // The middle distance between the two code words.
+      float d_hamming_middle;
 
      public:
       ecc_repetition_decode_bb_impl(unsigned int repetition);

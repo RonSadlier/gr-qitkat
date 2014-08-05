@@ -25,6 +25,8 @@
 #include <gnuradio/io_signature.h>
 #include "ecc_repetition_decode_bb_impl.h"
 
+#include <numeric>
+
 namespace gr {
   namespace qitkat {
 
@@ -37,6 +39,7 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
               gr::io_signature::make(1, 1, sizeof(unsigned char)), repetition) {
       d_repetition = repetition;
+      d_hamming_middle = repetition/2.0;
     }
 
     ecc_repetition_decode_bb_impl::~ecc_repetition_decode_bb_impl() {
@@ -48,24 +51,27 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
-      unsigned int outputPos = 0;
+      // Our reconstructed byte
+      std::vector<bool> reconstructed(8, 0);
 
-      for(int i = 0; i < noutput_items*d_repetition; i+=d_repetition) {
-        // Set count array to 0.
-        std::fill_n(d_byte_value_count, 256, 0);
+      // Loop over each bit
+      for(int i = 0; i < 8; i++) {
+        // Our recovered code word
+        std::vector<bool> recovered(d_repetition, 0);
 
-        // Create counts for each input byte.
-        for(unsigned char j = 0; j < d_repetition; j++) {
-          d_byte_value_count[in[i+j]]++;
+        // Loop over each input byte to get the correct bit for
+        // for the code words
+        for(int j = 0; j < d_repetition; j++) {
+          recovered[j] = (in[j] & (1 << i)) >> i;
         }
 
-        // Return the most common byte.
-        out[outputPos] = std::distance(d_byte_value_count, std::max_element(d_byte_value_count, d_byte_value_count + 256));
-        outputPos++;
+        // Check which codeword we have recovered
+        if(std::accumulate(recovered.begin(), recovered.end(), 0)> d_hamming_middle) {
+          out[0] += 1 << i;
+        }
       }
 
-      // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return 1;
     }
   } /* namespace qitkat */
 } /* namespace gr */

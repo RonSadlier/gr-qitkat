@@ -71,7 +71,7 @@ namespace gr {
         }
 
         // Multiply by number of encoded bits per item to get correct statistics
-        out[outputPos] = (ber / (float)(d_num_items*d_bit_mask_len));
+        out[outputPos] = ber / (d_num_items*d_bit_mask_len);
         outputPos++;
       }
 

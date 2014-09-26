@@ -33,54 +33,59 @@ namespace gr {
     }
 
     bsc_bb_impl::bsc_bb_impl(float error_rate, unsigned int seed, unsigned char bit_mask)
-      : gr::block("bsc_bb",
-              gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char))) {
-      // BSC error rate.
+      : gr::sync_block("bsc_bb",
+              gr::io_signature::make(1, 1, 1),
+              gr::io_signature::make(1, 1, 1)) {
+      // BSC error rate
       d_error_rate = error_rate;
 
-      // PRNG seed.
+      // PRNG seed
       d_seed = seed;
 
-      // PRNG initializer: srand() sets the seed for rand().
+      // PRNG initializer: srand() sets the seed for rand()
       srand(seed);
   
-      // Initialize bit mask for encoded alphabet.
-      d_bit_mask = bit_mask;
+      // Initialize bit mask for encoded alphabet
+      d_bitmask = bit_mask;
+      
+      // Loop through bits in a byte
+      int current_index = 0;
+      for(int i = 0; i < 8; i++) {
+        // We only care about the bits set in the bitmask
+        if(d_bitmask & (1 << i)) {
+          d_bitmask_indices[current_index] = i;
+          current_index++;
+        }
+      }
+      d_bitmask_hweight = current_index;
+      
+      if(d_error_rate == 1.0) {
+        // Rounding gets iffy here
+        d_rand_threshold = RAND_MAX;
+      } else {
+        d_rand_threshold = d_error_rate*RAND_MAX;
+      }
     }
 
     bsc_bb_impl::~bsc_bb_impl() {
     }
 
-    int bsc_bb_impl::general_work (int noutput_items,
-                       gr_vector_int &ninput_items,
+    int bsc_bb_impl::work(int noutput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
-      const unsigned char *in = (const unsigned char *) input_items[0];
-      unsigned char *out = (unsigned char *) output_items[0];
+      const unsigned char *in = (const unsigned char *)input_items[0];
+      unsigned char *out = (unsigned char *)output_items[0];
 
-      // Yes, this has a slight bias, but it serves our purposes for now.
-      // TODO: Rewrite to implement Boost library instead of rand().
+      memcpy(out, in, noutput_items);
 
-      // Loop through bytes
-      // TODO: Rewrite this to optimize
       for(int i = 0; i < noutput_items; i++) {
-        out[i] = in[i];
-        // Loop through bits in the byte
-        for(unsigned char j = 0; j < 8; j++) {
-          // We only care about the bits set in the bitset
-          if(d_bit_mask & (1 << j)) {
-            // Bin the random number into 0x0 or 0x1
-            if(((double) rand() / RAND_MAX) + 1 < d_error_rate + 1) {
-              // Flip the ith bit in the byte
-              out[i] ^= 1 << j;
-            }
+        // Loop through bits we care about
+        for(int j = 0; j < d_bitmask_hweight; j++) {
+          if(rand() < d_rand_threshold) {
+            out[i] ^= 1 << d_bitmask_indices[j];
           }
         }
       }
-
-      // Tell runtime system how many input items we consumed on each input stream.
-      consume_each(noutput_items);
 
       // Tell runtime system how many output items we produced.
       return noutput_items;

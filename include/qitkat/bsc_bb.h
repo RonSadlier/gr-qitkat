@@ -23,7 +23,7 @@
 #define INCLUDED_QITKAT_BSC_BB_H
 
 #include <qitkat/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/sync_block.h>
 
 namespace gr {
   namespace qitkat {
@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API bsc_bb : virtual public gr::block {
+    class QITKAT_API bsc_bb : virtual public gr::sync_block {
      public:
       typedef boost::shared_ptr<bsc_bb> sptr;
 

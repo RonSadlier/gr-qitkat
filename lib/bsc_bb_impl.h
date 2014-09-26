@@ -35,17 +35,22 @@ namespace gr {
       unsigned int d_seed;
 
       // Bit mask to indicate alphabet size, ie which bits within each byte to check.
-      unsigned char d_bit_mask;
-
-      // The number of bits in each byte to check according to the bitmask.
-      unsigned char d_bit_mask_len;
+      unsigned char d_bitmask;
+      
+      // The indices of the bits we are interested in flipping.
+      char d_bitmask_indices[8];
+      
+      // The Hamming weight of our bit mask.
+      char d_bitmask_hweight;
+      
+      // Where to divide the output of rand() to correspond to our two outcomes.
+      int d_rand_threshold;
 
      public:
       bsc_bb_impl(float error_rate, unsigned int seed, unsigned char bit_mask);
       ~bsc_bb_impl();
 
-      int general_work(int noutput_items,
-		     gr_vector_int &ninput_items,
+      int work(int noutput_items,
 		     gr_vector_const_void_star &input_items,
 		     gr_vector_void_star &output_items);
     };

@@ -82,6 +82,10 @@ namespace gr {
       for(int i = 0; i < noutput_items*2; i+=2) {
         // Copy of our two input bytes so we may modify them (and keep a record of what we received).
         unsigned char inputByte[2] = {in[i], in[i+1]};
+        
+        // Zero out our unused bit
+        inputByte[0] &= ~(1 << 7);
+        inputByte[1] &= ~(1 << 7);
 
         // The syndrome of the error correction algorithm. This is the base2 result
         // result of d_H*inputByteN, which is why we use bool. Each time we add to an
@@ -93,15 +97,14 @@ namespace gr {
           // Clear our syndrome vector.
           memset(syndrome, false, 3);
 
-          // Multiply each bit in d_H by inputByteN.
+          // Calculate syndrome 0,1,2
           for(unsigned char h = 0; h < 3; h++) {
-            // Check each bit in the row of H and the col of the incoming byte.
-            for(unsigned char col = 0; col < 8; col++) {
-              // We multiply each element in the two rows.
-              if((((d_H[h] & (1 << col)) & (inputByte[inputByteN] & (1 << col))) >> col) != 0) {
-                // Since we are adding in base 2, we can simply flip the proper syndrome bit.
-                syndrome[h] = !syndrome[h];
-              }
+            unsigned char sum = 0;
+            for(unsigned char col = 0; col < 7; col++) {
+              sum += ((d_H[h] & (1 << col)) & (inputByte[inputByteN] & (1 << col))) >> col;
+            }
+            if(sum % 2 != 0) {
+              syndrome[h] = !syndrome[h];
             }
           }
 

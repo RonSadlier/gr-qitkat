@@ -28,6 +28,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include <algorithm>
+#include <exception>
 
 using namespace std;
 using boost::asio::ip::tcp;
@@ -52,8 +53,7 @@ namespace gr {
       try {
         s.connect(*iterator);
       } catch(exception& e) {
-        std::cerr << "Error: " << e.what();
-        exit(-1);
+        throw std::runtime_error(e.what());
       }
 
     }
@@ -113,8 +113,7 @@ namespace gr {
             return temp;
           }
         } else {
-          std::cerr << "No data received although a header was.";
-          exit(-1);
+          throw std::runtime_error("No data received although a header was.");
         }
       }
     }

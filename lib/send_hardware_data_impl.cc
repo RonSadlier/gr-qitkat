@@ -26,6 +26,7 @@
 #include "send_hardware_data_impl.h"
 
 #include <boost/lexical_cast.hpp>
+#include <exception>
 
 using namespace std;
 using boost::asio::ip::tcp;
@@ -51,8 +52,7 @@ namespace gr {
       try {
         s.connect(*iterator);
       } catch(exception& e) {
-        std::cerr << "Error: " << e.what();
-        exit(-1);
+        throw std::runtime_error(e.what());
       }
     }
 

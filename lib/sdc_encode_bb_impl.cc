@@ -37,9 +37,9 @@ namespace gr {
       : gr::block("sdc_encode_bb",
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
               gr::io_signature::make(1, 1, sizeof(unsigned char))) {
-      // Check if n is within a range we can handle: 2 <= n <= 7
-      if(n < 2 || n > 7) {
-        std::cerr << "gr-qitkat fatal: invalid n value in sdc_encode_bb";
+      // Check if n is within a range we can handle: 1 <= n <= 7
+      if(n < 1 || n > 7) {
+        std::cerr << "gr-qitkat fatal: invalid n value in sdc_encode_bb: " << (int)n;
         exit(-1);
       }
 
@@ -49,11 +49,13 @@ namespace gr {
       // The quantum state space has size n^2 while the bit space has size 2^n.
       // We need to fit 2^n in n^2.
       d_num_bits_encoded = 1;
-      while(pow(2., 1.*d_num_bits_encoded) <= pow(1.*d_n, 2.)) {
-        d_num_bits_encoded++;
+      if(n != 1) {
+        while(pow(2., 1.*d_num_bits_encoded) <= pow(1.*d_n, 2.)) {
+          d_num_bits_encoded++;
+        }
+        // We always overshoot.
+        d_num_bits_encoded--;
       }
-      // We always overshoot.
-      d_num_bits_encoded--;
 
       // The number of bytes required each iteration.
       d_num_bytes_required = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / 8;

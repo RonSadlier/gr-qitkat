@@ -117,6 +117,7 @@ include_directories(
 link_directories(
     ${Boost_LIBRARY_DIRS}
     ${CPPUNIT_LIBRARY_DIRS}
+    ${ZMQ_LIB_DIRS}
     ${GNURADIO_RUNTIME_LIBRARY_DIRS}
 )
 

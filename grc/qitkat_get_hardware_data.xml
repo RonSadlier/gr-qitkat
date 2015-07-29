@@ -4,11 +4,16 @@
   <key>qitkat_get_hardware_data</key>
   <category>qitkat</category>
   <import>import qitkat</import>
-  <make>qitkat.get_hardware_data($address, $port)</make>
+  <make>qitkat.get_hardware_data($address, $port, $requested)</make>
   <param>
     <name>Address</name>
     <key>address</key>
     <type>string</type>
+  </param>
+  <param>
+	<name>Request Amount</name>
+	<key>requested</key>
+	<type>int</type>
   </param>
   <param>
     <name>Port</name>

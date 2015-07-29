@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#define UNIT_SIZE 8 // bytes
+#define UNIT_SIZE 1 // bytes
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -52,9 +52,10 @@ namespace gr {
       unsigned int output_pos = 0;
 
       // Deal with whole events, UNIT_SIZE bytes at a time.
-      for(int i = 0; i < noutput_items*UNIT_SIZE; i+=UNIT_SIZE) {
+      //for(int i = 0; i < noutput_items*UNIT_SIZE; i+=UNIT_SIZE) {
+      for(int i = 0; i < noutput_items; i++) {
         // We really only care about the last byte though
-        if(in[i+7] == 17) {
+        /*if(in[i+7] == 17) {
           out[output_pos] = 0;
           output_pos++;
         } else if(in[i+7] == 64) {
@@ -67,7 +68,22 @@ namespace gr {
           out[output_pos] = 3;
           output_pos++;
         } else {
-          std::cerr << "Unknown input state on extract hardware sdc";
+          std::cerr << "Unknown input state on extract hardware sdc:" << (int)in[i+7];
+        }*/
+       if(in[i] == 0) {
+          out[output_pos] = 0;
+          output_pos++;
+        } else if(in[i] == 1) {
+          out[output_pos] = 1;
+          output_pos++;
+        } else if(in[i] == 2) {
+          out[output_pos] = 2;
+          output_pos++;
+        } else if(in[i] == 3){
+          out[output_pos] = 3;
+          output_pos++;
+        } else {
+          std::cerr << "Unknown input state on extract hardware sdc:" << (int)in[i];
         }
       }
 

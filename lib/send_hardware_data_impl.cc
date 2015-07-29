@@ -28,7 +28,6 @@
 #include <boost/lexical_cast.hpp>
 
 using namespace std;
-using boost::asio::ip::tcp;
 
 namespace gr {
   namespace qitkat {
@@ -43,25 +42,17 @@ namespace gr {
     send_hardware_data_impl::send_hardware_data_impl(std::string address, unsigned short port)
       : gr::sync_block("send_hardware_data",
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(0, 0, 0)), d_address(address), d_port(port), resolver(io_service),
-              query(tcp::v4(), d_address, boost::lexical_cast<string>(d_port)), iterator(resolver.resolve(query)), s(io_service) {
-      memset(buffer, 0, MAX_PACKET_SIZE);
+              gr::io_signature::make(0, 0, 0)), d_address(address), d_port(port), context(1), socket(context, ZMQ_REQ) {
 
       // Try to connect to the server
-      try {
-        s.connect(*iterator);
-      } catch(exception& e) {
-        std::cerr << "Error: " << e.what();
-        exit(-1);
-      }
+      std::string connectAddress = "tcp://"+address+":"+boost::lexical_cast<std::string>(port);
+      socket.connect(connectAddress.c_str());
     }
 
     /*
      * Our virtual destructor.
      */
     send_hardware_data_impl::~send_hardware_data_impl() {
-      s.shutdown(tcp::socket::shutdown_both);
-      s.close();
     }
 
     int send_hardware_data_impl::work(int noutput_items,
@@ -70,26 +61,17 @@ namespace gr {
 
       const unsigned char* in = (const unsigned char *) input_items[0];
 
-      unsigned int body_count = 0;
-      unsigned char* body_count_p = (unsigned char*)&body_count;
-
-      if(noutput_items*ITEM_SIZE + PACKET_HEADER_SIZE > MAX_PACKET_SIZE) {
-        body_count = (int)((MAX_PACKET_SIZE-PACKET_HEADER_SIZE)/ITEM_SIZE);
-      } else {
-        body_count = noutput_items;
-      }
-      buffer[0] = body_count_p[0];
-      buffer[1] = body_count_p[1];
-      buffer[2] = body_count_p[2];
-
-      for(unsigned int i = 0; i < body_count; i++) {
-        buffer[PACKET_HEADER_SIZE+i] = in[i];
-      }
-
-      boost::asio::write(s, boost::asio::buffer(buffer, body_count*ITEM_SIZE + PACKET_HEADER_SIZE));
+      ::zmq::message_t request(noutput_items+1);
+      memset((unsigned char*)request.data(), 1, 1);
+      unsigned char *data = (unsigned char*)request.data();
+      memcpy(&data[1], in, noutput_items);
+      socket.send(request);
+        
+      ::zmq::message_t reply;
+      socket.recv(&reply);
 
       // Tell runtime system how many output items we produced.
-      return body_count;
+	  return noutput_items;
     }
 
   } /* namespace qitkat */

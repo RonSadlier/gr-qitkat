@@ -21,20 +21,18 @@
 #ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_IMPL_H
 #define INCLUDED_QITKAT_GET_HARDWARE_DATA_IMPL_H
 
-#define MAX_PACKET_SIZE 16384 // Bytes
-#define PACKET_HEADER_SIZE 3 // Bytes
-#define ITEM_SIZE 8 // Bytes
+#define ITEM_SIZE 1 // Bytes
 
 #include <qitkat/get_hardware_data.h>
 #include <string>
-#include <boost/asio.hpp>
+#include <zmq.hpp>
 
 namespace gr {
   namespace qitkat {
 
     class get_hardware_data_impl : public get_hardware_data {
      public:
-      get_hardware_data_impl(std::string address, unsigned short port);
+      get_hardware_data_impl(std::string address, unsigned short port, unsigned int requested);
       ~get_hardware_data_impl();
 
       // Where all the action really happens
@@ -44,13 +42,13 @@ namespace gr {
      private:
       std::string d_address;
       unsigned short d_port;
-      unsigned char buffer[MAX_PACKET_SIZE];
-      unsigned int buffer_size;
-      boost::asio::io_service io_service;
-      boost::asio::ip::tcp::resolver resolver;
-      boost::asio::ip::tcp::resolver::query query;
-      boost::asio::ip::tcp::resolver::iterator iterator;
-      boost::asio::ip::tcp::socket s;
+      unsigned int d_requested;
+      
+      ::zmq::context_t d_context;
+      ::zmq::socket_t d_socket;
+      
+	  unsigned long d_received;
+	  unsigned long d_toReceive;
     };
   } // namespace qitkat
 } // namespace gr

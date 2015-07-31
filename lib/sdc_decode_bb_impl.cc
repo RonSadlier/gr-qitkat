@@ -64,6 +64,7 @@ namespace gr {
       d_num_bytes_output = boost::math::lcm((unsigned char)8, d_num_bits_encoded) / (unsigned char)8;
       
       // We can only produce output in blocks.
+      //set_output_multiple(d_num_bytes_output);
       set_output_multiple(d_num_bytes_output);
     }
 
@@ -80,10 +81,18 @@ namespace gr {
                        gr_vector_void_star &output_items) {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
+      
+      // \fixme: Make the unreachable algorithm below work for certain cases
+      out[0] = (in[0]) & 3;
+      out[0] += (in[1]) << 2;
+      out[0] += (in[2]) << 4;
+      out[0] += (in[3]) << 6;
+      consume_each(4);
+      return 1;
 
       // The absolute position within the output stream
-      int inPos = 0;
-      int outPos = 0;
+      unsigned long inPos(0);
+      unsigned long outPos(0);
     
       while(outPos < noutput_items) {
         // The input flag we are currently on. This is within our current cluster within the stream.
@@ -124,7 +133,7 @@ namespace gr {
       consume_each(inPos);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return outPos;
     }
   } /* namespace qitkat */
 } /* namespace gr */

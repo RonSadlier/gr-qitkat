@@ -83,6 +83,15 @@ namespace gr {
                        gr_vector_void_star &output_items) {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
+      
+      // \fixme: Make the unreachable algorithm below work for certain cases
+      out[0] = (in[0]) & 3;
+      out[1] = (in[0] >> 2) & 3;
+      out[2] = (in[0] >> 4) & 3;
+      out[3] = (in[0] >> 6) & 3;
+      consume_each(1);
+      return 4;
+      
 
       // Create our output flags based on our input byte. This makes our flag pattern like so:
       // 000: 0x0
@@ -95,8 +104,8 @@ namespace gr {
       // eg, 0x1 is sent, 00000001, so it is sent as flag 1, then flag 0, then flag 0, then flag 0.
 
       // The absolute position within the output stream
-      int outPos = 0;
-      int inPos = 0;
+      unsigned long outPos(0);
+      unsigned long inPos(0);
       
       while(outPos < noutput_items) {
         // The current input byte, counting down. This is within our current cluster within the stream.
@@ -137,7 +146,7 @@ namespace gr {
       consume_each(inPos);
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return outPos;
     }
   } /* namespace qitkat */
 } /* namespace gr */

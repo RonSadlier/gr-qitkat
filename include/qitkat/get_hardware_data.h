@@ -46,7 +46,7 @@ namespace gr {
        * class. qitkat::get_hardware_datas::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::string address, unsigned short port);
+      static sptr make(std::string address, unsigned short port, unsigned int requested);
     };
 
   } // namespace qitkat

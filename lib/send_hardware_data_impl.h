@@ -21,13 +21,11 @@
 #ifndef INCLUDED_QITKAT_SEND_HARDWARE_DATA_IMPL_H
 #define INCLUDED_QITKAT_SEND_HARDWARE_DATA_IMPL_H
 
-#define MAX_PACKET_SIZE 16384 // Bytes
-#define PACKET_HEADER_SIZE 3 // Bytes
 #define ITEM_SIZE 1 // Bytes, since we are only sending SDC flags
 
 #include <qitkat/send_hardware_data.h>
 #include <string>
-#include <boost/asio.hpp>
+#include <zmq.hpp>
 
 namespace gr {
   namespace qitkat {
@@ -44,12 +42,8 @@ namespace gr {
      private:
       std::string d_address;
       unsigned short d_port;
-      unsigned char buffer[MAX_PACKET_SIZE];
-      boost::asio::io_service io_service;
-      boost::asio::ip::tcp::resolver resolver;
-      boost::asio::ip::tcp::resolver::query query;
-      boost::asio::ip::tcp::resolver::iterator iterator;
-      boost::asio::ip::tcp::socket s;
+      ::zmq::context_t context;
+      ::zmq::socket_t socket;
     };
 
   } // namespace qitkat

@@ -29,7 +29,7 @@ namespace gr {
     class ber_bf_impl : public ber_bf {
      private:
       // Number of bytes to check each iteration.
-      unsigned long int d_num_items;
+      unsigned long d_num_items;
 
       // Bit mask to indicate alphabet size, ie which bits within each byte to check.
       unsigned char d_bit_mask;
@@ -38,7 +38,7 @@ namespace gr {
       unsigned char d_bit_mask_len;
 
      public:
-      ber_bf_impl(unsigned long int num_items, unsigned char bit_mask);
+      ber_bf_impl(unsigned long num_items, unsigned char bit_mask);
       ~ber_bf_impl();
 
       int work(int noutput_items,

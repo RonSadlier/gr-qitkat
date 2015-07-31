@@ -45,7 +45,8 @@ list(APPEND qitkat_sources
     extract_hardware_sdc_impl.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
-target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})
+find_library(ZMQ_LIB zmq)
+target_link_libraries(gnuradio-qitkat ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES} zmq)
 set_target_properties(gnuradio-qitkat PROPERTIES DEFINE_SYMBOL "gnuradio_qitkat_EXPORTS")
 
 ########################################################################

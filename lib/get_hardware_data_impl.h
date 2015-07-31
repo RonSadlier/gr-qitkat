@@ -42,7 +42,7 @@ namespace gr {
      private:
       std::string d_address;
       unsigned short d_port;
-      unsigned int d_requested;
+      unsigned long d_requested;
       
       ::zmq::context_t d_context;
       ::zmq::socket_t d_socket;

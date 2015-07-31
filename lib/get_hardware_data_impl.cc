@@ -59,13 +59,13 @@ namespace gr {
 
       // We don't have anything left to get
       if(d_toReceive == 0) {
-	    //return -1;
+	    return -1;
 	  }
 
       ::zmq::message_t request(4);
-	  unsigned int requestNow(0);
+	  unsigned long requestNow(0);
 
-      if(noutput_items < d_toReceive) {
+      if(noutput_items <= d_toReceive) {
 		// Not enough buffer space to store all the requested data
         // Only request a partial amount
         requestNow = noutput_items;
@@ -87,7 +87,7 @@ namespace gr {
         return -1;
       } else {
 		d_received += reply.size();
-		d_toReceive = d_requested - d_received;
+		d_toReceive -= reply.size();
 		memcpy(out, (unsigned char*)reply.data(), reply.size());
 		return reply.size();
 	  }

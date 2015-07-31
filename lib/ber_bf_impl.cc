@@ -61,12 +61,12 @@ namespace gr {
 
       // We know noutput_items is a fixed multiple of d_num_items, but not necessarily equal.
       // So we loop through all input items in blocks of length d_num_items.
-      int outputPos = 0;
-      for(int i = 0; i < noutput_items*d_num_items; i += d_num_items) {
+      unsigned long outputPos = 0;
+      for(unsigned long i = 0; i < noutput_items*d_num_items; i += d_num_items) {
         float ber = 0;
 
         // Calculate BER over frame length
-        for(int j = 0; j < d_num_items; j++) {
+        for(unsigned long j = 0; j < d_num_items; j++) {
           ber += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
         }
 

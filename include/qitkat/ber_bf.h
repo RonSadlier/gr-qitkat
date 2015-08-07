@@ -46,7 +46,7 @@ namespace gr {
        * class. qitkat::ber_bf::make is the public interface for
        * creating new instances.
        */
-      static sptr make(unsigned long int num_items, unsigned char bit_mask);
+      static sptr make(unsigned int num_items, unsigned char bit_mask);
     };
 
   } // namespace qitkat

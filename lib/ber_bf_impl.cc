@@ -31,11 +31,11 @@ using namespace std;
 namespace gr {
   namespace qitkat {
 
-    ber_bf::sptr ber_bf::make(unsigned long int num_items, unsigned char bit_mask) {
+    ber_bf::sptr ber_bf::make(unsigned int num_items, unsigned char bit_mask) {
       return gnuradio::get_initial_sptr(new ber_bf_impl(num_items, bit_mask));
     }
 
-    ber_bf_impl::ber_bf_impl(unsigned long int num_items, unsigned char bit_mask)
+    ber_bf_impl::ber_bf_impl(unsigned int num_items, unsigned char bit_mask)
       : gr::sync_decimator("ber_bf",
               gr::io_signature::make(2, 2, sizeof(unsigned char)),
               gr::io_signature::make(1, 1, sizeof(float)), num_items) {

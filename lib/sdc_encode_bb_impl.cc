@@ -84,14 +84,7 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
       
-      // \fixme: Make the unreachable algorithm below work for certain cases
-      out[0] = (in[0]) & 3;
-      out[1] = (in[0] >> 2) & 3;
-      out[2] = (in[0] >> 4) & 3;
-      out[3] = (in[0] >> 6) & 3;
-      consume_each(1);
-      return 4;
-      
+      memset(out, 0, noutput_items);
 
       // Create our output flags based on our input byte. This makes our flag pattern like so:
       // 000: 0x0

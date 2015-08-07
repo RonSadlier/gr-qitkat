@@ -84,13 +84,7 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
       
-      // \fixme: Make the unreachable algorithm below work for certain cases
-      out[0] = (in[0]) & 3;
-      out[0] += (in[1]) << 2;
-      out[0] += (in[2]) << 4;
-      out[0] += (in[3]) << 6;
-      consume_each(4);
-      return 1;
+      memset(out, 0, noutput_items);
 
       // The absolute position within the output stream
       unsigned long inPos(0);

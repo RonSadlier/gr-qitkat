@@ -61,17 +61,19 @@ namespace gr {
 
       // We know noutput_items is a fixed multiple of d_num_items, but not necessarily equal.
       // So we loop through all input items in blocks of length d_num_items.
-      unsigned long outputPos = 0;
-      for(unsigned long i = 0; i < noutput_items*d_num_items; i += d_num_items) {
-        float ber = 0;
+      unsigned long outputPos(0);
+      unsigned long sum(0);
+      
+      for(unsigned long i = 0; outputPos < noutput_items; i += d_num_items) {
+        sum = 0;
 
         // Calculate BER over frame length
         for(unsigned long j = 0; j < d_num_items; j++) {
-          ber += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
+         sum += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
         }
 
         // Multiply by number of encoded bits per item to get correct statistics
-        out[outputPos] = ber / (d_num_items*d_bit_mask_len);
+        out[outputPos] = (float)sum / (d_num_items*d_bit_mask_len);
         outputPos++;
       }
 

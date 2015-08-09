@@ -55,6 +55,8 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
+      memset(out, 0, noutput_items);
+
       unsigned int inPos = 0;
       unsigned int outPos = 0;
 

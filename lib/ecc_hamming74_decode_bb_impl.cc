@@ -77,9 +77,10 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
-      unsigned int outputPos = 0;
+      unsigned long outputPos = 0;
 
-      for(int i = 0; i < noutput_items*2; i+=2) {
+      for(unsigned long i = 0; i < noutput_items*2; i+=2) {
+		  out[outputPos] = 0;
         // Copy of our two input bytes so we may modify them (and keep a record of what we received).
         unsigned char inputByte[2] = {in[i], in[i+1]};
         
@@ -99,7 +100,7 @@ namespace gr {
 
           // Calculate syndrome 0,1,2
           for(unsigned char h = 0; h < 3; h++) {
-            unsigned char sum = 0;
+            unsigned char sum(0);
             for(unsigned char col = 0; col < 7; col++) {
               sum += ((d_H[h] & (1 << col)) & (inputByte[inputByteN] & (1 << col))) >> col;
             }
@@ -109,7 +110,7 @@ namespace gr {
           }
 
           // If our syndrome does not have trivial elements, we need to perform error correction.
-          if((syndrome[0] || syndrome[1] || syndrome[2]) == true) {
+          if((syndrome[0] || syndrome[1] || syndrome[2]) != 0) {
             // We convert the three boolean values to a 3 bit number representing the bit we need to flip.
             // We'd like to ensure our boolean true is cast properly (if this is even a problem).
             inputByte[inputByteN] ^= 1 << (7 - (((syndrome[2]?1:0) << 2) + ((syndrome[1]?1:0) << 1) + (syndrome[0]?1:0)));
@@ -128,7 +129,7 @@ namespace gr {
       }
 
       // Tell runtime system how many output items we produced.
-      return noutput_items;
+      return outputPos;
     }
   } /* namespace qitkat */
 } /* namespace gr */

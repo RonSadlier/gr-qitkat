@@ -36,7 +36,6 @@ list(APPEND qitkat_sources
     ecc_hamming74_encode_bb_impl.cc
     ecc_hamming74_decode_bb_impl.cc
     ecc_golay.cc
-    ecc_golaytable.cc
     ecc_golay2412_encode_bb_impl.cc
     ecc_golay2412_decode_bb_impl.cc
     get_hardware_data_impl.cc

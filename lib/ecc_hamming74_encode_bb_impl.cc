@@ -69,16 +69,19 @@ namespace gr {
         const unsigned char *in = (const unsigned char *) input_items[0];
         unsigned char *out = (unsigned char *) output_items[0];
 
-        for(int i = 0; i < noutput_items; i++) {
+		unsigned long outputPos(0);
+
+        for(unsigned long i = 0; outputPos < noutput_items; i++) {
           // The first half of the incoming byte.
-          out[i*2] = d_encodeTable[in[i] & 0x0f];
+          out[outputPos] = d_encodeTable[in[i] & 0x0f];
 
           // The other half of the incoming byte.
-          out[i*2+1] = d_encodeTable[in[i] >> 4];
+          out[outputPos+1] = d_encodeTable[in[i] >> 4];
+          outputPos+=2;
         }
 
         // Tell runtime system how many output items we produced.
-        return noutput_items;
+        return outputPos;
     }
 
   } /* namespace qitkat */

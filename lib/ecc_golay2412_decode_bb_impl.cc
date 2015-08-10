@@ -35,21 +35,16 @@ namespace gr {
     }
 
     ecc_golay2412_decode_bb_impl::ecc_golay2412_decode_bb_impl()
-      : gr::block("ecc_golay2412_decode_bb",
+      : gr::sync_decimator("ecc_golay2412_decode_bb",
               gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char))) {
+              gr::io_signature::make(1, 1, sizeof(unsigned char)), 2) {
       set_output_multiple(3);
     }
 
     ecc_golay2412_decode_bb_impl::~ecc_golay2412_decode_bb_impl() {
     }
 
-    void ecc_golay2412_decode_bb_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-        ninput_items_required[0] = 6*noutput_items;
-    }
-
-    int ecc_golay2412_decode_bb_impl::general_work(int noutput_items,
-                       gr_vector_int &ninput_items,
+    int ecc_golay2412_decode_bb_impl::work(int noutput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
       const unsigned char *in = (const unsigned char *) input_items[0];
@@ -90,11 +85,8 @@ namespace gr {
         outPos += 3;
       }
 
-      // Consume 6 input bytes
-      consume_each(inPos);
-
       // We have items available for the scheduler.
-      return outPos;
+      return noutput_items;
     }
 
   } /* namespace qitkat */

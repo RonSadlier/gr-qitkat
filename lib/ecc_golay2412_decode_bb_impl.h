@@ -27,18 +27,11 @@ namespace gr {
   namespace qitkat {
 
     class ecc_golay2412_decode_bb_impl : public ecc_golay2412_decode_bb {
-     private:
-      // Nothing to declare in this block.
-
      public:
       ecc_golay2412_decode_bb_impl();
-
       ~ecc_golay2412_decode_bb_impl();
 
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
+      int work(int noutput_items,
 		       gr_vector_const_void_star &input_items,
 		       gr_vector_void_star &output_items);
     };

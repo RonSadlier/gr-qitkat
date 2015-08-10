@@ -23,7 +23,7 @@
 #define INCLUDED_QITKAT_ECC_GOLAY2412_DECODE_BB_H
 
 #include <qitkat/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/sync_decimator.h>
 
 namespace gr {
   namespace qitkat {
@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup qitkat
      *
      */
-    class QITKAT_API ecc_golay2412_decode_bb : virtual public gr::block {
+    class QITKAT_API ecc_golay2412_decode_bb : virtual public gr::sync_decimator  {
      public:
       typedef boost::shared_ptr<ecc_golay2412_decode_bb> sptr;
 

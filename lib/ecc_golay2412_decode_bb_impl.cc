@@ -55,12 +55,10 @@ namespace gr {
       const unsigned char *in = (const unsigned char *) input_items[0];
       unsigned char *out = (unsigned char *) output_items[0];
 
-      memset(out, 0, noutput_items);
+      unsigned long inPos(0);
+      unsigned long outPos(0);
 
-      unsigned int inPos = 0;
-      unsigned int outPos = 0;
-
-      while(inPos < noutput_items*6) {
+      while(outPos < noutput_items) {
         // This are temporary holders for two 24 bit strings
         unsigned long firstPart = 0;
         unsigned char* pFirstPart = (unsigned char*)&firstPart;
@@ -82,6 +80,7 @@ namespace gr {
         unsigned char* pDecoded2 = (unsigned char*)&decoded2;
 
         // Unpack our dedcoded bits
+        memset(&out[outPos], 0, 3);
         out[outPos] = pDecoded1[0]; // 8 Bits
         out[outPos+1] = pDecoded1[1] & 0x0F; // 12 Bits 
         out[outPos+1] += (pDecoded2[0] & 0x0F) << 4; // 16 Bits

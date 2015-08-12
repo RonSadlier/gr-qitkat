@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 Travis S. Humble - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Travis S. Humble - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_BSC_BB_H
 #define INCLUDED_QITKAT_BSC_BB_H
 
@@ -26,30 +25,26 @@
 #include <gnuradio/sync_block.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief A binary symmetric channel.
+		 * \ingroup qitkat
+		 */
+		class QITKAT_API bsc_bb : virtual public gr::sync_block {
+		 public:
+			typedef boost::shared_ptr<bsc_bb> sptr;
 
-    /*!
-     * \brief A binary symmetric channel.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API bsc_bb : virtual public gr::sync_block {
-     public:
-      typedef boost::shared_ptr<bsc_bb> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::bsc_bb.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::bsc_bb's
+			 * constructor is in a private implementation
+			 * class. qitkat::bsc_bb::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make(float error_rate, unsigned int seed, unsigned char bit_mask);
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::bsc_bb.
-       *
-       * To avoid accidental use of raw pointers, qitkat::bsc_bb's
-       * constructor is in a private implementation
-       * class. qitkat::bsc_bb::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(float error_rate, unsigned int seed, unsigned char bit_mask);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_BSC_BB_H */
-
+#endif

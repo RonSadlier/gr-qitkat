@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_FILTER_TIMESTAMPS_H
 #define INCLUDED_QITKAT_FILTER_TIMESTAMPS_H
 
@@ -26,30 +25,26 @@
 #include <gnuradio/block.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Remove all data except raw timestamps.
+		 * \ingroup qitkat
+		 */
+		class QITKAT_API filter_timestamps : virtual public gr::block {
+		 public:
+			typedef boost::shared_ptr<filter_timestamps> sptr;
 
-    /*!
-     * \brief Remove all data except raw timestamps.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API filter_timestamps : virtual public gr::block {
-     public:
-      typedef boost::shared_ptr<filter_timestamps> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::filter_timestamps.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::filter_timestamps's
+			 * constructor is in a private implementation
+			 * class. qitkat::filter_timestamps::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make();
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::filter_timestamps.
-       *
-       * To avoid accidental use of raw pointers, qitkat::filter_timestamps's
-       * constructor is in a private implementation
-       * class. qitkat::filter_timestamps::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make();
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_FILTER_TIMESTAMPS_H */
-
+#endif

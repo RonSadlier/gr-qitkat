@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_TERMINAL_DISPLAY_B_H
 #define INCLUDED_QITKAT_TERMINAL_DISPLAY_B_H
 
@@ -26,30 +25,27 @@
 #include <gnuradio/sync_block.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Output a stream of bytes to the terminal display.
+		 * \ingroup qitkat
+		 *
+		 */
+		class QITKAT_API terminal_display_b : virtual public gr::sync_block {
+		 public:
+			typedef boost::shared_ptr<terminal_display_b> sptr;
 
-    /*!
-     * \brief Output a stream of bytes to the terminal display.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API terminal_display_b : virtual public gr::sync_block {
-     public:
-      typedef boost::shared_ptr<terminal_display_b> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::terminal_display_b.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::terminal_display_b's
+			 * constructor is in a private implementation
+			 * class. qitkat::terminal_display_b::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make();
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::terminal_display_b.
-       *
-       * To avoid accidental use of raw pointers, qitkat::terminal_display_b's
-       * constructor is in a private implementation
-       * class. qitkat::terminal_display_b::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make();
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_TERMINAL_DISPLAY_B_H */
-
+#endif

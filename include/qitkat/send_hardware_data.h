@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_SEND_HARDWARE_DATA_H
 #define INCLUDED_QITKAT_SEND_HARDWARE_DATA_H
 
@@ -26,30 +25,27 @@
 #include <gnuradio/sync_block.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Send data to our hardware.
+		 * \ingroup qitkat
+		 *
+		 */
+		class QITKAT_API send_hardware_data : virtual public gr::sync_block {
+		 public:
+			typedef boost::shared_ptr<send_hardware_data> sptr;
 
-    /*!
-     * \brief Send data to our hardware.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API send_hardware_data : virtual public gr::sync_block {
-     public:
-      typedef boost::shared_ptr<send_hardware_data> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::send_hardware_data.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::send_hardware_data's
+			 * constructor is in a private implementation
+			 * class. qitkat::send_hardware_data::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make(std::string address, unsigned short port);
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::send_hardware_data.
-       *
-       * To avoid accidental use of raw pointers, qitkat::send_hardware_data's
-       * constructor is in a private implementation
-       * class. qitkat::send_hardware_data::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(std::string address, unsigned short port);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_SEND_HARDWARE_DATA_H */
-
+#endif

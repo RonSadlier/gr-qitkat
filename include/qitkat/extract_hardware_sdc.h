@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_EXTRACT_HARDWARE_SDC_H
 #define INCLUDED_QITKAT_EXTRACT_HARDWARE_SDC_H
 
@@ -26,30 +25,26 @@
 #include <gnuradio/sync_decimator.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Extract SDC flags from hardware data returned.
+		 * \ingroup qitkat
+		 */
+		class QITKAT_API extract_hardware_sdc : virtual public gr::sync_decimator {
+		 public:
+			typedef boost::shared_ptr<extract_hardware_sdc> sptr;
 
-    /*!
-     * \brief Extract SDC flags from hardware data returned.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API extract_hardware_sdc : virtual public gr::sync_decimator {
-     public:
-      typedef boost::shared_ptr<extract_hardware_sdc> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::extract_hardware_sdc.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::extract_hardware_sdc's
+			 * constructor is in a private implementation
+			 * class. qitkat::extract_hardware_sdc::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make();
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::extract_hardware_sdc.
-       *
-       * To avoid accidental use of raw pointers, qitkat::extract_hardware_sdc's
-       * constructor is in a private implementation
-       * class. qitkat::extract_hardware_sdc::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make();
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_EXTRACT_HARDWARE_SDC_H */
-
+#endif

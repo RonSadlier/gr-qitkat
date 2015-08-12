@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +18,34 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_GET_HARDWARE_DATA_H
 #define INCLUDED_QITKAT_GET_HARDWARE_DATA_H
 
 #include <qitkat/api.h>
 #include <gnuradio/sync_block.h>
-#include <string>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Listen for data from our hardware.
+		 * \ingroup qitkat
+		 *
+		 */
+		class QITKAT_API get_hardware_data : virtual public gr::sync_block {
+		 public:
+			typedef boost::shared_ptr<get_hardware_data> sptr;
 
-    /*!
-     * \brief Listen for data from our hardware.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API get_hardware_data : virtual public gr::sync_block {
-     public:
-      typedef boost::shared_ptr<get_hardware_data> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_data.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::get_hardware_data's
+			 * constructor is in a private implementation
+			 * class. qitkat::get_hardware_datas::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make(std::string address, unsigned short port, unsigned int requested);
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::get_hardware_data.
-       *
-       * To avoid accidental use of raw pointers, qitkat::get_hardware_data's
-       * constructor is in a private implementation
-       * class. qitkat::get_hardware_datas::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make(std::string address, unsigned short port, unsigned int requested);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_GET_HARDWARE_DATA_H */
-
+#endif

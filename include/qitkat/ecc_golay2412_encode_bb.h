@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef INCLUDED_QITKAT_ECC_GOLAY2412_ENCODE_BB_H
 #define INCLUDED_QITKAT_ECC_GOLAY2412_ENCODE_BB_H
 
@@ -26,30 +25,27 @@
 #include <gnuradio/sync_interpolator.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/*!
+		 * \brief Encode data using the Golay2412 algorithm.
+		 * \ingroup qitkat
+		 *
+		 */
+		class QITKAT_API ecc_golay2412_encode_bb : virtual public gr::sync_interpolator {
+		 public:
+			typedef boost::shared_ptr<ecc_golay2412_encode_bb> sptr;
 
-    /*!
-     * \brief Encode data using the Golay2412 algorithm.
-     * \ingroup qitkat
-     *
-     */
-    class QITKAT_API ecc_golay2412_encode_bb : virtual public gr::sync_interpolator {
-     public:
-      typedef boost::shared_ptr<ecc_golay2412_encode_bb> sptr;
+			/*!
+			 * \brief Return a shared_ptr to a new instance of qitkat::ecc_golay2412_encode_bb.
+			 *
+			 * To avoid accidental use of raw pointers, qitkat::ecc_golay2412_encode_bb's
+			 * constructor is in a private implementation
+			 * class. qitkat::ecc_golay2412_encode_bb::make is the public interface for
+			 * creating new instances.
+			 */
+			static sptr make();
+		};
+	}
+}
 
-      /*!
-       * \brief Return a shared_ptr to a new instance of qitkat::ecc_golay2412_encode_bb.
-       *
-       * To avoid accidental use of raw pointers, qitkat::ecc_golay2412_encode_bb's
-       * constructor is in a private implementation
-       * class. qitkat::ecc_golay2412_encode_bb::make is the public interface for
-       * creating new instances.
-       */
-      static sptr make();
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_ECC_GOLAY2412_ENCODE_BB_H */
-
+#endif

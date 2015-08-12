@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,43 +22,56 @@
 #include "config.h"
 #endif
 
-#include <gnuradio/io_signature.h>
 #include "ecc_repetition_encode_bb_impl.h"
+#include <gnuradio/io_signature.h>
 
 namespace gr {
-  namespace qitkat {
-
-    ecc_repetition_encode_bb::sptr ecc_repetition_encode_bb::make(unsigned int repetition) {
-      return gnuradio::get_initial_sptr(new ecc_repetition_encode_bb_impl(repetition));
-    }
-
-    ecc_repetition_encode_bb_impl::ecc_repetition_encode_bb_impl(unsigned int repetition)
-      : gr::sync_interpolator("ecc_repetition_encode_bb",
-              gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char)), repetition) {
-      d_repetition = repetition;
-    }
-
-    ecc_repetition_encode_bb_impl::~ecc_repetition_encode_bb_impl() {
-    }
-
-    int ecc_repetition_encode_bb_impl::work(int noutput_items,
-			  gr_vector_const_void_star &input_items,
-			  gr_vector_void_star &output_items) {
-        const unsigned char *in = (const unsigned char *) input_items[0];
-        unsigned char *out = (unsigned char *) output_items[0];
-
-      // TODO: Rewrite this so it is not O(n^2)
-      for(int i = 0; i < noutput_items/d_repetition; i++) {
-        for(int j = 0; j < d_repetition; j++) {
-          memcpy(&out[i*d_repetition + j], &in[i], sizeof(unsigned char));
-        }
-      }
-
-      // Tell runtime system how many output items we produced.
-      return noutput_items;
-    }
-
-  } /* namespace qitkat */
-} /* namespace gr */
-
+	namespace qitkat {
+		unsigned long ecc_repetition_encode_bb_impl::power2_table[8] = {1, 2, 4, 8, 16, 32, 64, 128};
+		
+		ecc_repetition_encode_bb::sptr ecc_repetition_encode_bb::make(unsigned int repetition) {
+			return gnuradio::get_initial_sptr(new ecc_repetition_encode_bb_impl(repetition));
+		}
+		
+		ecc_repetition_encode_bb_impl::ecc_repetition_encode_bb_impl(unsigned int repetition)
+				: gr::sync_interpolator("ecc_repetition_encode_bb",
+					gr::io_signature::make(1, 1, sizeof(unsigned char)),
+					gr::io_signature::make(1, 1, sizeof(unsigned char)), repetition), d_repetition(repetition) {
+		}
+		
+		ecc_repetition_encode_bb_impl::~ecc_repetition_encode_bb_impl() {
+		}
+		
+		int ecc_repetition_encode_bb_impl::work(int noutput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items) {
+			const unsigned char *in = (const unsigned char *) input_items[0];
+			unsigned char *out = (unsigned char *) output_items[0];
+			
+			unsigned long inByte(0);
+			unsigned long inBit(0);
+			unsigned long outByte(0);
+			unsigned long outBit(0);
+			
+			memset(out, 0, noutput_items);
+			
+			while(outByte < noutput_items) {
+				if(inBit > 7) {
+					inBit = 0;
+					++inByte;
+				}
+				for(unsigned long i = 0; i < d_repetition; i++) {
+					if(outBit > 7) {
+						outBit = 0;
+						++outByte;
+					}
+					out[outByte] += ((in[inByte] & power2_table[inBit]) >> inBit) << outBit;
+					++outBit;
+				}
+				++inBit;
+			}
+			
+			return noutput_items;
+		}
+	}
+}

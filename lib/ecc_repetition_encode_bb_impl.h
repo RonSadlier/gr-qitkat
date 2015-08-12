@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,24 +24,23 @@
 #include <qitkat/ecc_repetition_encode_bb.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		class ecc_repetition_encode_bb_impl : public ecc_repetition_encode_bb {
+		 public:
+			ecc_repetition_encode_bb_impl(unsigned int repetition);
+			~ecc_repetition_encode_bb_impl();
 
-    class ecc_repetition_encode_bb_impl : public ecc_repetition_encode_bb {
-     private:
-      // The number of times to repeat something.
-      unsigned int d_repetition;
+			int work(int noutput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		 private:
+			// The number of times to repeat something.
+			unsigned int d_repetition;
+			
+			// Lookup table for power of 2
+			static unsigned long power2_table[8];
+		};
+	}
+}
 
-     public:
-      ecc_repetition_encode_bb_impl(unsigned int repetition);
-
-      ~ecc_repetition_encode_bb_impl();
-
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
-    };
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_ECC_REPETITION_ENCODE_BB_IMPL_H */
-
+#endif

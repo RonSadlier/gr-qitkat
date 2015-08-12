@@ -22,31 +22,29 @@
 #include "config.h"
 #endif
 
-#include "ecc_bit_interleave_bb_impl.h"
+#include "ecc_bit_deinterleave_bb_impl.h"
 #include <gnuradio/io_signature.h>
 
 namespace gr {
 	namespace qitkat {
-		ecc_bit_interleave_bb::sptr ecc_bit_interleave_bb::make(unsigned int block) {
-			return gnuradio::get_initial_sptr(new ecc_bit_interleave_bb_impl(block));
+		ecc_bit_deinterleave_bb::sptr ecc_bit_deinterleave_bb::make(unsigned int block) {
+			return gnuradio::get_initial_sptr(new ecc_bit_deinterleave_bb_impl(block));
 		}
 		
-		ecc_bit_interleave_bb_impl::ecc_bit_interleave_bb_impl(unsigned int block)
-				: gr::sync_block("ecc_bit_interleave_bb",
+		ecc_bit_deinterleave_bb_impl::ecc_bit_deinterleave_bb_impl(unsigned int block)
+				: gr::sync_block("ecc_bit_deinterleave_bb",
 					gr::io_signature::make(1, 1, sizeof(unsigned char)),
 					gr::io_signature::make(1, 1, sizeof(unsigned char))), d_block(block) {
 			if(block != 2) {
 				std::cerr << "Sorry, only block=2 is currently supported";
 				exit(-1);
 			}
-			
-			d_blocks_in_byte = 8 / block;
 		}
 		
-		ecc_bit_interleave_bb_impl::~ecc_bit_interleave_bb_impl() {
+		ecc_bit_deinterleave_bb_impl::~ecc_bit_deinterleave_bb_impl() {
 		}
 		
-		int ecc_bit_interleave_bb_impl::work(int noutput_items,
+		int ecc_bit_deinterleave_bb_impl::work(int noutput_items,
 				gr_vector_const_void_star &input_items,
 				gr_vector_void_star &output_items) {
 			const unsigned char *in = (const unsigned char *) input_items[0];

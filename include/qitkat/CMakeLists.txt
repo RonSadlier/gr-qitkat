@@ -26,6 +26,7 @@ install(FILES
 	entropy_bf.h
 	terminal_display_b.h
 	ecc_bit_interleave_bb.h
+	ecc_bit_deinterleave_bb.h
 	ecc_repetition_encode_bb.h
 	ecc_repetition_decode_bb.h
 	ecc_hamming74_encode_bb.h

@@ -18,17 +18,17 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_QITKAT_ECC_BIT_INTERLEAVE_BB_IMPL_H
-#define INCLUDED_QITKAT_ECC_BIT_INTERLEAVE_BB_IMPL_H
+#ifndef INCLUDED_QITKAT_ECC_BIT_DEINTERLEAVE_BB_IMPL_H
+#define INCLUDED_QITKAT_ECC_BIT_DEINTERLEAVE_BB_IMPL_H
 
-#include <qitkat/ecc_bit_interleave_bb.h>
+#include <qitkat/ecc_bit_deinterleave_bb.h>
 
 namespace gr {
 	namespace qitkat {
-		class ecc_bit_interleave_bb_impl : public ecc_bit_interleave_bb {
+		class ecc_bit_deinterleave_bb_impl : public ecc_bit_deinterleave_bb {
 		 public:
-			ecc_bit_interleave_bb_impl(unsigned int block);
-			~ecc_bit_interleave_bb_impl();
+			ecc_bit_deinterleave_bb_impl(unsigned int block);
+			~ecc_bit_deinterleave_bb_impl();
 
 			int work(int noutput_items,
 					gr_vector_const_void_star &input_items,
@@ -36,9 +36,6 @@ namespace gr {
 		 private:
 			// Block size of bits to interleave at a time.
 			unsigned int d_block;
-			
-			// Number of blocks in byte.
-			unsigned int d_blocks_in_byte;
 		};
 	}
 }

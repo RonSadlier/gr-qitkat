@@ -25,6 +25,7 @@ install(FILES
 	qitkat_entropy_bf.xml
 	qitkat_terminal_display_b.xml
 	qitkat_ecc_bit_interleave_bb.xml
+	qitkat_ecc_bit_deinterleave_bb.xml
 	qitkat_ecc_repetition_encode_bb.xml
 	qitkat_ecc_repetition_decode_bb.xml
 	qitkat_ecc_hamming74_encode_bb.xml

@@ -1,5 +1,5 @@
 # 
-# Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
+# Copyright 2013-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
 # 
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,9 +17,6 @@
 # Boston, MA 02110-1301, USA.
 #
 
-########################################################################
-# Install public header files
-########################################################################
 install(FILES
 	api.h
 	sdc_encode_bb.h
@@ -28,6 +25,7 @@ install(FILES
 	bsc_bb.h
 	entropy_bf.h
 	terminal_display_b.h
+	ecc_bit_interleave_bb.h
 	ecc_repetition_encode_bb.h
 	ecc_repetition_decode_bb.h
 	ecc_hamming74_encode_bb.h

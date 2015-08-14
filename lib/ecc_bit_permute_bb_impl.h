@@ -1,48 +1,41 @@
 /* -*- c++ -*- */
-/* 
+/*
  * Copyright 2015 Ronald J. Sadlier - Oak Ridge National Laboratory
- * 
+ *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this software; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_QITKAT_ECC_BIT_DEINTERLEAVE_BB_H
-#define INCLUDED_QITKAT_ECC_BIT_DEINTERLEAVE_BB_H
+#ifndef INCLUDED_QITKAT_ECC_BIT_PERMUTE_BB_IMPL_H
+#define INCLUDED_QITKAT_ECC_BIT_PERMUTE_BB_IMPL_H
 
-#include <qitkat/api.h>
-#include <gnuradio/sync_block.h>
+#include <qitkat/ecc_bit_permute_bb.h>
 
 namespace gr {
 	namespace qitkat {
-		/*!
-		 * \brief Interleave bits in a byte stream.
-		 * \ingroup qitkat
-		 */
-		class QITKAT_API ecc_bit_deinterleave_bb : virtual public gr::sync_block {
+		class ecc_bit_permute_bb_impl : public ecc_bit_permute_bb {
 		 public:
-			typedef boost::shared_ptr<ecc_bit_deinterleave_bb> sptr;
+			ecc_bit_permute_bb_impl(std::vector<long> permutation_matrix);
+			~ecc_bit_permute_bb_impl();
 
-			/*!
-			 * \brief Return a shared_ptr to a new instance of qitkat::ecc_bit_deinterleave_bb.
-			 *
-			 * To avoid accidental use of raw pointers, qitkat::ecc_bit_deinterleave_bb's
-			 * constructor is in a private implementation
-			 * class. qitkat::ecc_bit_deinterleave_bb::make is the public interface for
-			 * creating new instances.
-			 */
-			static sptr make(unsigned int repetition);
+			int work(int noutput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		 private:
+			// Permutation matrix for bits. The lowest index is the least significant bit.
+			std::vector<std::vector<bool> > perm_matrix;
 		};
 	}
 }

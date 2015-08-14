@@ -31,8 +31,7 @@ list(APPEND qitkat_sources
     bsc_bb_impl.cc
     entropy_bf_impl.cc
     terminal_display_b_impl.cc
-    ecc_bit_interleave_bb_impl.cc
-    ecc_bit_deinterleave_bb_impl.cc
+    ecc_bit_permute_bb_impl.cc
     ecc_repetition_encode_bb_impl.cc
     ecc_repetition_decode_bb_impl.cc
     ecc_hamming74_encode_bb_impl.cc

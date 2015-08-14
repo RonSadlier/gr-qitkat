@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <block>
-  <name>Bit Deinterleave</name>
-  <key>qitkat_ecc_bit_deinterleave_bb</key>
+  <name>Bit Permute</name>
+  <key>qitkat_ecc_bit_permute_bb</key>
   <category>qitkat.ecc</category>
   <import>import qitkat</import>
-  <make>qitkat.ecc_bit_deinterleave_bb($block)</make>
+  <make>qitkat.ecc_bit_permute_bb($permutation)</make>
   <param>
-    <name>Block</name>
-    <key>block</key>
-    <type>int</type>
+    <name>Permutation</name>
+    <key>permutation</key>
+    <type>int_vector</type>
   </param>
   <sink>
     <name>in</name>
@@ -19,6 +19,6 @@
     <type>byte</type>
   </source>
   <doc>
-	Deinterleave bits in a byte stream.
+	Interleave bits in a byte stream.
   </doc>
 </block>

@@ -85,7 +85,7 @@ namespace gr {
       d_socket.recv(&reply);
 	  
       if(reply.size() == 0) {
-        return -1;
+        return 0;
       } else {
 		d_received += reply.size();
 		d_toReceive -= reply.size();

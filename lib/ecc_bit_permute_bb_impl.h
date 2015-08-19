@@ -27,15 +27,16 @@ namespace gr {
 	namespace qitkat {
 		class ecc_bit_permute_bb_impl : public ecc_bit_permute_bb {
 		 public:
-			ecc_bit_permute_bb_impl(std::vector<long> permutation_matrix);
+			ecc_bit_permute_bb_impl(std::vector<unsigned long> permutation_matrix);
 			~ecc_bit_permute_bb_impl();
 
 			int work(int noutput_items,
 					gr_vector_const_void_star &input_items,
 					gr_vector_void_star &output_items);
 		 private:
-			// Permutation matrix for bits. The lowest index is the least significant bit.
-			std::vector<std::vector<bool> > perm_matrix;
+			// Permutation matrix for bits. The index represents where the bit represented by the value should
+			// be placed. LSB first.
+			std::vector<unsigned long> d_permutation_matrix;
 		};
 	}
 }

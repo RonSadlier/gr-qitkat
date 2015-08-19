@@ -27,24 +27,18 @@
 
 namespace gr {
 	namespace qitkat {
-		ecc_bit_permute_bb::sptr ecc_bit_permute_bb::make(std::vector<long> permutation_matrix) {
+		ecc_bit_permute_bb::sptr ecc_bit_permute_bb::make(std::vector<unsigned long> permutation_matrix) {
 			return gnuradio::get_initial_sptr(new ecc_bit_permute_bb_impl(permutation_matrix));
 		}
 		
-		ecc_bit_permute_bb_impl::ecc_bit_permute_bb_impl(std::vector<long> permutation_matrix)
+		ecc_bit_permute_bb_impl::ecc_bit_permute_bb_impl(std::vector<unsigned long> permutation_matrix)
 				: gr::sync_block("ecc_bit_permute_bb",
 					gr::io_signature::make(1, 1, sizeof(unsigned char)),
-					gr::io_signature::make(1, 1, sizeof(unsigned char))),
-				perm_matrix(24, std::vector<bool>(24, false)) {
-			// \todo: clean this up
-			for(unsigned long row = 0; row < permutation_matrix.size(); row++) {
-				if(permutation_matrix[row] >= 24) {
-					std::cerr << "bad input data";
-					exit(-1);
-				}
-				perm_matrix[row][permutation_matrix[row]] = true;
-			}
-			set_output_multiple(3);
+					gr::io_signature::make(1, 1, sizeof(unsigned char))), d_permutation_matrix(permutation_matrix) {
+
+			// \todo: input sanity check
+
+			set_output_multiple(permutation_matrix.size()/8);
 		}
 		
 		ecc_bit_permute_bb_impl::~ecc_bit_permute_bb_impl() {
@@ -56,29 +50,27 @@ namespace gr {
 			const unsigned char *in = (const unsigned char *) input_items[0];
 			unsigned char *out = (unsigned char *) output_items[0];
 			
-			// \todo: make this generic
-			for(unsigned long i; i < noutput_items; i+=3) {
+			unsigned long numBytes = d_permutation_matrix.size()/8;
+			
+			for(unsigned long i = 0; i < noutput_items; i+=numBytes) {
 				unsigned long inL(0);
 				unsigned char* inC = (unsigned char*)(&inL);
-				inC[0] = in[i+2];
-				inC[1] = in[i+1];
-				inC[2] = in[i+0];
+				for(unsigned long j = 0; j < numBytes; j++) {
+					inC[j] = in[i+j];
+				}
 				
 				unsigned long outL(0);
 				unsigned char* outC = (unsigned char*)&outL;
 				
-				for(unsigned long row = 0; row < perm_matrix.size(); row++) {
-					for(unsigned long col = 0; col < perm_matrix[row].size(); col++) {
-						if(perm_matrix[row][col] && (inL >> row) & 1 == 1) {
-							outL |= 1 << col;
-							break;
-						}
+				for(unsigned long row = 0; row < d_permutation_matrix.size(); row++) {
+					if(((inL >> d_permutation_matrix[row]) & 1) == 1) {
+						outL |= 1 << row;
 					}
 				}
 				
-				out[i+0] = outC[2];
-				out[i+1] = outC[1];
-				out[i+2] = outC[0];
+				for(unsigned long j = 0; j < numBytes; j++) {
+					out[i+j] = outC[j];
+				}
 			}
 			
 			return noutput_items;

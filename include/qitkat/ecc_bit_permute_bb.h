@@ -42,7 +42,7 @@ namespace gr {
 			 * class. qitkat::ecc_bit_permute_bb::make is the public interface for
 			 * creating new instances.
 			 */
-			static sptr make(std::vector<long> permutation);
+			static sptr make(std::vector<unsigned long> permutation);
 		};
 	}
 }

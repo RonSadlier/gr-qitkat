@@ -36,14 +36,13 @@ namespace gr {
 					gr::io_signature::make(1, 1, sizeof(unsigned char)),
 					gr::io_signature::make(1, 1, sizeof(unsigned char))),
 				perm_matrix(24, std::vector<bool>(24, false)) {
+			// \todo: clean this up
 			for(unsigned long row = 0; row < permutation_matrix.size(); row++) {
-				unsigned long size = sizeof(permutation_matrix[row])*8;
-				for(unsigned long bit = 0; bit < size; bit++) {
-					if((permutation_matrix[row] >> bit) & 1 == 1) {
-						perm_matrix[row][bit] = true;
-						break;
-					}
+				if(permutation_matrix[row] >= 24) {
+					std::cerr << "bad input data";
+					exit(-1);
 				}
+				perm_matrix[row][permutation_matrix[row]] = true;
 			}
 			set_output_multiple(3);
 		}

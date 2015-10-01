@@ -22,6 +22,8 @@
 #ifndef INCLUDED_GOLAY_H
 #define INCLUDED_GOLAY_H
 
+#include <cstddef>
+
 /**
  * \brief Encodes a message using the extended binary Golay code.
  *

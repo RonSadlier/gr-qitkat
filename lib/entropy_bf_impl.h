@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2011 - 2014 Travis S. Humble - Oak Ridge National Laboratory
+ * Copyright 2011-2013 Travis S. Humble - Oak Ridge National Laboratory
+ * Copyright 2013-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,32 +25,32 @@
 #include <qitkat/entropy_bf.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		class entropy_bf_impl : public entropy_bf {
+		 public:
+			entropy_bf_impl(int num_items);
+			~entropy_bf_impl();
+			
+			void forecast(int noutput_items, gr_vector_int &ninput_items_required);
+			int general_work(int noutput_items,
+					gr_vector_int &ninput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		
+		 private:
+			/**
+			 * Number of items to use for entropy calculation.
+			 */
+			unsigned int d_num_items;
+			
+			float single_entropy(void* in, const std::size_t size);
+			float joint_entropy(void* in0, void* in1, const std::size_t size);
+		};
+	}
+}
 
-    class entropy_bf_impl : public entropy_bf {
-     private:
-      // Number of items to use for entropy calculation.
-      unsigned int d_num_items;
-
-      // Method to compute entropy of single input stream.
-      float single_entropy(unsigned char *in);
-
-      // Method to compute entropy of joint input streams.
-      float joint_entropy(unsigned char *in0, unsigned char *in1);
-
-     public:
-      entropy_bf_impl(int num_items);
-      ~entropy_bf_impl();
-
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
-    };
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_ENTROPY_BF_IMPL_H */
+#endif
 

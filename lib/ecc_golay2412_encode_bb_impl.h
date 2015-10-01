@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,21 @@
 #include <qitkat/ecc_golay2412_encode_bb.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		class ecc_golay2412_encode_bb_impl : public ecc_golay2412_encode_bb {
+		 public:
+			ecc_golay2412_encode_bb_impl();
+			~ecc_golay2412_encode_bb_impl();
+			
+			int work(int noutput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		};
+	}
+}
 
-    class ecc_golay2412_encode_bb_impl : public ecc_golay2412_encode_bb {
-     public:
-      ecc_golay2412_encode_bb_impl();
-      ~ecc_golay2412_encode_bb_impl();
-
-      int work(int noutput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_ECC_GOLAY2412_ENCODE_BB_IMPL_H */
+#endif
 

@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,29 +24,22 @@
 #include <qitkat/ecc_hamming74_decode_bb.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		class ecc_hamming74_decode_bb_impl : public ecc_hamming74_decode_bb {
+		 public:
+			ecc_hamming74_decode_bb_impl();
+			~ecc_hamming74_decode_bb_impl();
+			
+			int work(int noutput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		
+		 private:
+			const static unsigned char d_decodeTable[16];
+			const static unsigned char d_H[3];
+		};
+	}
+}
 
-    class ecc_hamming74_decode_bb_impl : public ecc_hamming74_decode_bb {
-     private:
-      // Decoder lookup table.
-      const static unsigned char d_decodeTable[16];
-
-      // H is a 3x8 matrix used in calculating the syndrome.
-      // Each row is treated as a byte with each bit representing an element.
-      const static unsigned char d_H[3];
-
-     public:
-      ecc_hamming74_decode_bb_impl();
-
-      ~ecc_hamming74_decode_bb_impl();
-
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_ECC_HAMMING74_DECODE_BB_IMPL_H */
+#endif
 

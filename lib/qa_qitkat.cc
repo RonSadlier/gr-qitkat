@@ -27,10 +27,8 @@
 
 #include "qa_qitkat.h"
 
-CppUnit::TestSuite *
-qa_qitkat::suite()
-{
-  CppUnit::TestSuite *s = new CppUnit::TestSuite("qitkat");
-
-  return s;
+CppUnit::TestSuite* qa_qitkat::suite() {
+	CppUnit::TestSuite *s = new CppUnit::TestSuite("qitkat");
+	
+	return s;
 }

@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2011 - 2014 Travis S. Humble - Oak Ridge National Laboratory
+ * Copyright 2011-2013 Travis S. Humble - Oak Ridge National Laboratory
+ * Copyright 2013-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,64 +23,73 @@
 #include "config.h"
 #endif
 
-#include <gnuradio/io_signature.h>
 #include "ber_bf_impl.h"
+#include <gnuradio/io_signature.h>
 #include <bitset>
 
 using namespace std;
 
 namespace gr {
-  namespace qitkat {
-
-    ber_bf::sptr ber_bf::make(unsigned int num_items, unsigned char bit_mask) {
-      return gnuradio::get_initial_sptr(new ber_bf_impl(num_items, bit_mask));
-    }
-
-    ber_bf_impl::ber_bf_impl(unsigned int num_items, unsigned char bit_mask)
-      : gr::sync_decimator("ber_bf",
-              gr::io_signature::make(2, 2, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(float)), num_items) {
-      // Initialize frame length.
-      d_num_items = num_items;
-
-      // Initialize bit mask for encoded alphabet.
-      d_bit_mask = bit_mask;
-
-      // Calculate size of d_bit_mask.
-      d_bit_mask_len = bitset<8>(d_bit_mask).count();
-    }
-
-    ber_bf_impl::~ber_bf_impl() {
-    }
-
-    int ber_bf_impl::work(int noutput_items,
-                       gr_vector_const_void_star &input_items,
-                       gr_vector_void_star &output_items) {
-      const unsigned char *in0 = (const unsigned char *) input_items[0];
-      const unsigned char *in1 = (const unsigned char *) input_items[1];
-      float *out = (float *) output_items[0];
-
-      // We know noutput_items is a fixed multiple of d_num_items, but not necessarily equal.
-      // So we loop through all input items in blocks of length d_num_items.
-      unsigned long outputPos(0);
-      unsigned long sum(0);
-      
-      for(unsigned long i = 0; outputPos < noutput_items; i += d_num_items) {
-        sum = 0;
-
-        // Calculate BER over frame length
-        for(unsigned long j = 0; j < d_num_items; j++) {
-         sum += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
-        }
-
-        // Multiply by number of encoded bits per item to get correct statistics
-        out[outputPos] = (float)sum / (d_num_items*d_bit_mask_len);
-        outputPos++;
-      }
-
-      // Tell runtime system how many output items we produced.
-      return noutput_items;
-    }
-  } /* namespace qitkat */
-} /* namespace gr */
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		ber_bf::sptr ber_bf::make(unsigned int num_items, unsigned char bit_mask) {
+			return gnuradio::get_initial_sptr(new ber_bf_impl(num_items, bit_mask));
+		}
+		
+		/**
+		 * \brief Constructor.
+		 */
+		ber_bf_impl::ber_bf_impl(unsigned int num_items, unsigned char bit_mask)
+				: gr::sync_decimator("ber_bf",
+				gr::io_signature::make(2, 2, sizeof(unsigned char)),
+				gr::io_signature::make(1, 1, sizeof(float)), num_items) {
+			// Initialize frame length.
+			d_num_items = num_items;
+			
+			// Initialize bit mask for encoded alphabet.
+			d_bit_mask = bit_mask;
+			
+			// Calculate size of d_bit_mask.
+			d_bit_mask_len = bitset<8>(d_bit_mask).count();
+		}
+		
+		/**
+		 * \brief Destructor.
+		 */
+		ber_bf_impl::~ber_bf_impl() {
+		}
+		
+		/**
+		 * \brief Work function.
+		 */
+		int ber_bf_impl::work(int noutput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items) {
+			const unsigned char* in0 = (const unsigned char*)input_items[0];
+			const unsigned char* in1 = (const unsigned char*)input_items[1];
+			float* out = (float*)output_items[0];
+			
+			// We know noutput_items is a fixed multiple of d_num_items, but not necessarily equal.
+			// So we loop through all input items in blocks of length d_num_items.
+			unsigned long outputPos(0);
+			unsigned long sum(0);
+			
+			for(std::size_t i = 0; outputPos < noutput_items; i += d_num_items) {
+				sum = 0;
+				
+				// Calculate BER over frame length
+				for(std::size_t j = 0; j < d_num_items; j++) {
+					sum += bitset<8>((in0[i+j] ^ in1[i+j]) & d_bit_mask).count();
+				}
+				
+				// Multiply by number of encoded bits per item to get correct statistics
+				out[outputPos] = (float)sum / (d_num_items*d_bit_mask_len);
+				outputPos++;
+			}
+			return noutput_items;
+		}
+	}
+}
 

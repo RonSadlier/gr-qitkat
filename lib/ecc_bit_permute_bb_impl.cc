@@ -27,23 +27,33 @@
 
 namespace gr {
 	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
 		ecc_bit_permute_bb::sptr ecc_bit_permute_bb::make(std::vector<unsigned long> permutation_matrix) {
 			return gnuradio::get_initial_sptr(new ecc_bit_permute_bb_impl(permutation_matrix));
 		}
 		
+		/**
+		 * \brief Constructor.
+		 */
 		ecc_bit_permute_bb_impl::ecc_bit_permute_bb_impl(std::vector<unsigned long> permutation_matrix)
 				: gr::sync_block("ecc_bit_permute_bb",
 					gr::io_signature::make(1, 1, sizeof(unsigned char)),
 					gr::io_signature::make(1, 1, sizeof(unsigned char))), d_permutation_matrix(permutation_matrix) {
-
-			// \todo: input sanity check
-
+			/** \todo: input sanity check */
 			set_output_multiple(permutation_matrix.size()/8);
 		}
 		
+		/**
+		 * \brief Destructor.
+		 */
 		ecc_bit_permute_bb_impl::~ecc_bit_permute_bb_impl() {
 		}
 		
+		/**
+		 * \brief Work function.
+		 */
 		int ecc_bit_permute_bb_impl::work(int noutput_items,
 				gr_vector_const_void_star &input_items,
 				gr_vector_void_star &output_items) {
@@ -52,7 +62,7 @@ namespace gr {
 			
 			unsigned long numBytes = d_permutation_matrix.size()/8;
 			
-			for(unsigned long i = 0; i < noutput_items; i+=numBytes) {
+			for(std::size_t i = 0; i < noutput_items; i+=numBytes) {
 				unsigned long inL(0);
 				unsigned char* inC = (unsigned char*)(&inL);
 				for(unsigned long j = 0; j < numBytes; j++) {
@@ -62,17 +72,16 @@ namespace gr {
 				unsigned long outL(0);
 				unsigned char* outC = (unsigned char*)&outL;
 				
-				for(unsigned long row = 0; row < d_permutation_matrix.size(); row++) {
+				for(std::size_t row = 0; row < d_permutation_matrix.size(); row++) {
 					if(((inL >> d_permutation_matrix[row]) & 1) == 1) {
 						outL |= 1 << row;
 					}
 				}
 				
-				for(unsigned long j = 0; j < numBytes; j++) {
+				for(std::size_t j = 0; j < numBytes; j++) {
 					out[i+j] = outC[j];
 				}
 			}
-			
 			return noutput_items;
 		}
 	}

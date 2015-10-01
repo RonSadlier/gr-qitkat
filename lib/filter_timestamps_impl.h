@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,23 +24,23 @@
 #include <qitkat/filter_timestamps.h>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		class filter_timestamps_impl : public filter_timestamps {
+		 public:
+			filter_timestamps_impl();
+			~filter_timestamps_impl();
+			
+			void forecast(int noutput_items, gr_vector_int &ninput_items_required);
+			int general_work(int noutput_items,
+					gr_vector_int &ninput_items,
+					gr_vector_const_void_star &input_items,
+					gr_vector_void_star &output_items);
+		};
+	}
+}
 
-    class filter_timestamps_impl : public filter_timestamps {
-     public:
-      filter_timestamps_impl();
-      ~filter_timestamps_impl();
-
-      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
-
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
-    };
-
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_FILTER_TIMESTAMPS_IMPL_H */
+#endif
 

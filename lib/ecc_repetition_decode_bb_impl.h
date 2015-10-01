@@ -30,19 +30,25 @@ namespace gr {
 		 public:
 			ecc_repetition_decode_bb_impl(unsigned int repetition);
 			~ecc_repetition_decode_bb_impl();
-
+			
 			int work(int noutput_items,
 					gr_vector_const_void_star &input_items,
 					gr_vector_void_star &output_items);
-	       
+		
 		 private:
-			// The number of times something was repeated.
+			/**
+			 * The number of times something was repeated.
+			 */
 			unsigned int d_repetition;
-
-			// The middle distance between the two code words.
+			
+			/**
+			 * The middle distance between the two code words.
+			 */
 			float d_hamming_middle;
 			
-			// Lookup table for power of 2
+			/**
+			 * \brief Lookup table for power of 2.
+			 */
 			static unsigned long power2_table[8];
 		};
 	}

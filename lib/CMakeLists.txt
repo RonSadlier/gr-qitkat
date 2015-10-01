@@ -25,25 +25,25 @@ include(GrPlatform) #define LIB_SUFFIX
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND qitkat_sources
-    sdc_encode_bb_impl.cc
-    sdc_decode_bb_impl.cc
-    ber_bf_impl.cc
-    bsc_bb_impl.cc
-    entropy_bf_impl.cc
-    terminal_display_b_impl.cc
-    ecc_bit_permute_bb_impl.cc
-    ecc_repetition_encode_bb_impl.cc
-    ecc_repetition_decode_bb_impl.cc
-    ecc_hamming74_encode_bb_impl.cc
-    ecc_hamming74_decode_bb_impl.cc
-    ecc_golay.cc
-    ecc_golay2412_encode_bb_impl.cc
-    ecc_golay2412_decode_bb_impl.cc
-    get_hardware_data_impl.cc
-    filter_timestamps_impl.cc
-    send_hardware_data_impl.cc
-    extract_hardware_sdc_impl.cc
-    qrng_source_i_impl.cc )
+	sdc_encode_bb_impl.cc
+	sdc_decode_bb_impl.cc
+	ber_bf_impl.cc
+	bsc_bb_impl.cc
+	entropy_bf_impl.cc
+	terminal_display_b_impl.cc
+	ecc_bit_permute_bb_impl.cc
+	ecc_repetition_encode_bb_impl.cc
+	ecc_repetition_decode_bb_impl.cc
+	ecc_hamming74_encode_bb_impl.cc
+	ecc_hamming74_decode_bb_impl.cc
+	ecc_golay.cc
+	ecc_golay2412_encode_bb_impl.cc
+	ecc_golay2412_decode_bb_impl.cc
+	get_hardware_data_impl.cc
+	filter_timestamps_impl.cc
+	send_hardware_data_impl.cc
+	extract_hardware_sdc_impl.cc
+	qrng_source_i_impl.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 find_library(ZMQ_LIB zmq)
@@ -54,9 +54,9 @@ set_target_properties(gnuradio-qitkat PROPERTIES DEFINE_SYMBOL "gnuradio_qitkat_
 # Install built library files
 ########################################################################
 install(TARGETS gnuradio-qitkat
-    LIBRARY DESTINATION lib${LIB_SUFFIX} # .so/.dylib file
-    ARCHIVE DESTINATION lib${LIB_SUFFIX} # .lib file
-    RUNTIME DESTINATION bin              # .dll file
+	LIBRARY DESTINATION lib${LIB_SUFFIX} # .so/.dylib file
+	ARCHIVE DESTINATION lib${LIB_SUFFIX} # .lib file
+	RUNTIME DESTINATION bin              # .dll file
 )
 
 ########################################################################
@@ -67,18 +67,18 @@ include(GrTest)
 include_directories(${CPPUNIT_INCLUDE_DIRS})
 
 list(APPEND test_qitkat_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_qitkat.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_qitkat.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/test_qitkat.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/qa_qitkat.cc
 )
 
 add_executable(test-qitkat ${test_qitkat_sources})
 
 target_link_libraries(
-  test-qitkat
-  ${GNURADIO_RUNTIME_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${CPPUNIT_LIBRARIES}
-  gnuradio-qitkat
+	test-qitkat
+	${GNURADIO_RUNTIME_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CPPUNIT_LIBRARIES}
+	gnuradio-qitkat
 )
 
 GR_ADD_TEST(test_qitkat test-qitkat)

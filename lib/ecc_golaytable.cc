@@ -19,9 +19,6 @@
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  */
-
-// Automatically generated from make_golaytable.m
-
 int golay_parity[] = {
 0, 4094, 1465, 2631, 733, 3363, 1892, 2202, 367, 3729, 1238, 2856, 946, 3148, 1547, 2549,
 2231, 1865, 3342, 752, 2666, 1428, 4051, 45, 2520, 1574, 3169, 927, 2821, 1275, 3772, 322,

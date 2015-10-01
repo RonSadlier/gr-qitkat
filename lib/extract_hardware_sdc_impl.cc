@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,73 +24,63 @@
 #include "config.h"
 #endif
 
-#include <gnuradio/io_signature.h>
 #include "extract_hardware_sdc_impl.h"
+#include <gnuradio/io_signature.h>
 
 namespace gr {
-  namespace qitkat {
-
-    extract_hardware_sdc::sptr extract_hardware_sdc::make() {
-      return gnuradio::get_initial_sptr(new extract_hardware_sdc_impl());
-    }
-
-    extract_hardware_sdc_impl::extract_hardware_sdc_impl()
-      : gr::sync_decimator("extract_hardware_sdc",
-              gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char)), UNIT_SIZE) {
-    }
-
-    extract_hardware_sdc_impl::~extract_hardware_sdc_impl() {
-    }
-
-    int extract_hardware_sdc_impl::work(int noutput_items,
-			  gr_vector_const_void_star &input_items,
-			  gr_vector_void_star &output_items) {
-      const unsigned char *in = (const unsigned char *) input_items[0];
-      unsigned char *out = (unsigned char *) output_items[0];
-
-      unsigned int output_pos = 0;
-
-      // Deal with whole events, UNIT_SIZE bytes at a time.
-      //for(int i = 0; i < noutput_items*UNIT_SIZE; i+=UNIT_SIZE) {
-      for(int i = 0; i < noutput_items; i++) {
-        // We really only care about the last byte though
-        /*if(in[i+7] == 17) {
-          out[output_pos] = 0;
-          output_pos++;
-        } else if(in[i+7] == 64) {
-          out[output_pos] = 1;
-          output_pos++;
-        } else if(in[i+7] == 68) {
-          out[output_pos] = 2;
-          output_pos++;
-        } else if(in[i+7] == 136){
-          out[output_pos] = 3;
-          output_pos++;
-        } else {
-          std::cerr << "Unknown input state on extract hardware sdc:" << (int)in[i+7];
-        }*/
-       if(in[i] == 0) {
-          out[output_pos] = 0;
-          output_pos++;
-        } else if(in[i] == 1) {
-          out[output_pos] = 1;
-          output_pos++;
-        } else if(in[i] == 2) {
-          out[output_pos] = 2;
-          output_pos++;
-        } else if(in[i] == 3){
-          out[output_pos] = 3;
-          output_pos++;
-        } else {
-          std::cerr << "Unknown input state on extract hardware sdc:" << (int)in[i];
-        }
-      }
-
-      // Tell runtime system how many output items we produced.
-      return noutput_items;
-    }
-
-  } /* namespace qitkat */
-} /* namespace gr */
-
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		extract_hardware_sdc::sptr extract_hardware_sdc::make() {
+			return gnuradio::get_initial_sptr(new extract_hardware_sdc_impl());
+		}
+		
+		/**
+		 * \brief Constructor.
+		 */
+		extract_hardware_sdc_impl::extract_hardware_sdc_impl()
+				: gr::sync_decimator("extract_hardware_sdc",
+				gr::io_signature::make(1, 1, sizeof(unsigned char)),
+				gr::io_signature::make(1, 1, sizeof(unsigned char)), UNIT_SIZE) {
+		}
+		
+		/**
+		 * \brief Destructor.
+		 */
+		extract_hardware_sdc_impl::~extract_hardware_sdc_impl() {
+		}
+		
+		/**
+		 * \brief Work function.
+		 */
+		int extract_hardware_sdc_impl::work(int noutput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items) {
+			const unsigned char *in = (const unsigned char *) input_items[0];
+			unsigned char *out = (unsigned char *) output_items[0];
+			
+			std::size_t output_pos(0);
+			
+			for(std::size_t i = 0; i < noutput_items; i++) {
+				if(in[i] == 0) {
+					out[output_pos] = 0;
+					output_pos++;
+				} else if(in[i] == 1) {
+					out[output_pos] = 1;
+					output_pos++;
+				} else if(in[i] == 2) {
+					out[output_pos] = 2;
+					output_pos++;
+				} else if(in[i] == 3){
+					out[output_pos] = 3;
+					output_pos++;
+				} else {
+					std::cerr << "Unknown input state on extract hardware sdc:" << (int)in[i];
+				}
+			}
+			
+			return noutput_items;
+		}
+	}
+}

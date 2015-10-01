@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,30 +28,32 @@
 #include <zmq.hpp>
 
 namespace gr {
-  namespace qitkat {
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		class get_hardware_data_impl : public get_hardware_data {
+		 public:
+			get_hardware_data_impl(std::string address, unsigned short port, unsigned int requested);
+			~get_hardware_data_impl();
+			
+			int work(int noutput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items);
+		
+		 private:
+			std::string d_address;
+			unsigned short d_port;
+			unsigned long d_requested;
+			
+			::zmq::context_t d_context;
+			::zmq::socket_t d_socket;
+			
+			unsigned long d_received;
+			unsigned long d_toReceive;
+		};
+	}
+}
 
-    class get_hardware_data_impl : public get_hardware_data {
-     public:
-      get_hardware_data_impl(std::string address, unsigned short port, unsigned int requested);
-      ~get_hardware_data_impl();
-
-      // Where all the action really happens
-      int work(int noutput_items,
-	       gr_vector_const_void_star &input_items,
-	       gr_vector_void_star &output_items);
-     private:
-      std::string d_address;
-      unsigned short d_port;
-      unsigned long d_requested;
-      
-      ::zmq::context_t d_context;
-      ::zmq::socket_t d_socket;
-      
-	  unsigned long d_received;
-	  unsigned long d_toReceive;
-    };
-  } // namespace qitkat
-} // namespace gr
-
-#endif /* INCLUDED_QITKAT_GET_HARDWARE_DATA_IMPL_H */
+#endif
 

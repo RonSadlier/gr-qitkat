@@ -29,15 +29,20 @@ namespace gr {
 		 public:
 			ecc_repetition_encode_bb_impl(unsigned int repetition);
 			~ecc_repetition_encode_bb_impl();
-
+			
 			int work(int noutput_items,
 					gr_vector_const_void_star &input_items,
 					gr_vector_void_star &output_items);
+		
 		 private:
-			// The number of times to repeat something.
+			/**
+			 * \brief The number of times to repeat something.
+			 */
 			unsigned int d_repetition;
 			
-			// Lookup table for power of 2
+			/**
+			 * \brief Lookup table for power of 2.
+			 */
 			static unsigned long power2_table[8];
 		};
 	}

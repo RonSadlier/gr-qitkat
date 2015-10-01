@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2014 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2014-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,53 +22,65 @@
 #include "config.h"
 #endif
 
-#include <gnuradio/io_signature.h>
 #include "filter_timestamps_impl.h"
+#include <gnuradio/io_signature.h>
 
 namespace gr {
-  namespace qitkat {
-
-    filter_timestamps::sptr filter_timestamps::make() {
-      return gnuradio::get_initial_sptr(new filter_timestamps_impl());
-    }
-
-    filter_timestamps_impl::filter_timestamps_impl()
-      : gr::block("filter_timestamps",
-              gr::io_signature::make(1, 1, sizeof(unsigned char)),
-              gr::io_signature::make(1, 1, sizeof(unsigned char))) {
-    }
-
-    filter_timestamps_impl::~filter_timestamps_impl(){
-    }
-
-    void filter_timestamps_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-        // We need at least 64 bits (one record), so we need 8 bytes.
-        ninput_items_required[0] = 8;
-    }
-
-    int filter_timestamps_impl::general_work (int noutput_items,
-                       gr_vector_int &ninput_items,
-                       gr_vector_const_void_star &input_items,
-                       gr_vector_void_star &output_items) {
-      const unsigned char *in = (const unsigned char *) input_items[0];
-      unsigned char *out = (unsigned char *) output_items[0];
-
-      unsigned int outpos = 0;
-
-      for(unsigned int j = 1; j < 7; j++) {
-          out[outpos] = in[j];
-          outpos++;
-      }
-
-      // Tell runtime system how many input items we consumed on
-      // each input stream.
-      //consume_each ((int)(noutput_items/8)*8);
-      consume_each(8);
-
-      // Tell runtime system how many output items we produced.
-      return outpos;
-    }
-
-  } /* namespace qitkat */
-} /* namespace gr */
+	namespace qitkat {
+		/**
+		 * \brief todo.
+		 */
+		filter_timestamps::sptr filter_timestamps::make() {
+			return gnuradio::get_initial_sptr(new filter_timestamps_impl());
+		}
+		
+		/**
+		 * \brief Constructor.
+		 */
+		filter_timestamps_impl::filter_timestamps_impl()
+				: gr::block("filter_timestamps",
+				gr::io_signature::make(1, 1, sizeof(unsigned char)),
+				gr::io_signature::make(1, 1, sizeof(unsigned char))) {
+		}
+		
+		/**
+		 * \brief Destructor.
+		 */
+		filter_timestamps_impl::~filter_timestamps_impl(){
+		}
+		
+		/**
+		 * \brief Forecast function.
+		 */
+		void filter_timestamps_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
+			// We need at least 64 bits (one record), so we need 8 bytes.
+			ninput_items_required[0] = 8;
+		}
+		
+		/**
+		 * \brief Work function.
+		 */
+		int filter_timestamps_impl::general_work (int noutput_items,
+				gr_vector_int &ninput_items,
+				gr_vector_const_void_star &input_items,
+				gr_vector_void_star &output_items) {
+			const unsigned char *in = (const unsigned char *) input_items[0];
+			unsigned char *out = (unsigned char *) output_items[0];
+			
+			std::size_t outpos(0);
+			
+			for(std::size_t j = 1; j < 7; j++) {
+				out[outpos] = in[j];
+				outpos++;
+			}
+			
+			// Tell runtime system how many input items we consumed on
+			// each input stream.
+			consume_each(8);
+			
+			// Tell runtime system how many output items we produced.
+			return outpos;
+		}
+	}
+}
 

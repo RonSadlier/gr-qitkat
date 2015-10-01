@@ -29,29 +29,42 @@ namespace gr {
 	namespace qitkat {
 		unsigned long ecc_repetition_encode_bb_impl::power2_table[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 		
+		/**
+		 * \brief todo.
+		 */
 		ecc_repetition_encode_bb::sptr ecc_repetition_encode_bb::make(unsigned int repetition) {
 			return gnuradio::get_initial_sptr(new ecc_repetition_encode_bb_impl(repetition));
 		}
 		
+		/**
+		 * \brief Constructor.
+		 */
 		ecc_repetition_encode_bb_impl::ecc_repetition_encode_bb_impl(unsigned int repetition)
 				: gr::sync_interpolator("ecc_repetition_encode_bb",
 					gr::io_signature::make(1, 1, sizeof(unsigned char)),
-					gr::io_signature::make(1, 1, sizeof(unsigned char)), repetition), d_repetition(repetition) {
+					gr::io_signature::make(1, 1, sizeof(unsigned char)), repetition),
+					d_repetition(repetition) {
 		}
 		
+		/**
+		 * \brief Destructor.
+		 */
 		ecc_repetition_encode_bb_impl::~ecc_repetition_encode_bb_impl() {
 		}
 		
+		/**
+		 * \brief Work function.
+		 */
 		int ecc_repetition_encode_bb_impl::work(int noutput_items,
 				gr_vector_const_void_star &input_items,
 				gr_vector_void_star &output_items) {
-			const unsigned char *in = (const unsigned char *) input_items[0];
-			unsigned char *out = (unsigned char *) output_items[0];
+			const unsigned char* in = (const unsigned char*)input_items[0];
+			unsigned char* out = (unsigned char*)output_items[0];
 			
-			unsigned long inByte(0);
-			unsigned long inBit(0);
-			unsigned long outByte(0);
-			unsigned long outBit(0);
+			std::size_t inByte(0);
+			std::size_t inBit(0);
+			std::size_t outByte(0);
+			std::size_t outBit(0);
 			
 			memset(out, 0, noutput_items);
 			
@@ -60,7 +73,7 @@ namespace gr {
 					inBit = 0;
 					++inByte;
 				}
-				for(unsigned long i = 0; i < d_repetition; i++) {
+				for(std::size_t i = 0; i < d_repetition; i++) {
 					if(outBit > 7) {
 						outBit = 0;
 						++outByte;

@@ -25,6 +25,7 @@
 #include "qitkat/filter_timestamps.h"
 #include "qitkat/send_hardware_data.h"
 #include "qitkat/extract_hardware_sdc.h"
+#include "qitkat/qrng_source_i.h"
 %}
 
 
@@ -62,3 +63,5 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, filter_timestamps);
 GR_SWIG_BLOCK_MAGIC2(qitkat, send_hardware_data);
 %include "qitkat/extract_hardware_sdc.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, extract_hardware_sdc);
+%include "qitkat/qrng_source_i.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, qrng_source_i);

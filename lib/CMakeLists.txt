@@ -42,7 +42,8 @@ list(APPEND qitkat_sources
     get_hardware_data_impl.cc
     filter_timestamps_impl.cc
     send_hardware_data_impl.cc
-    extract_hardware_sdc_impl.cc )
+    extract_hardware_sdc_impl.cc
+    qrng_source_i_impl.cc )
 
 add_library(gnuradio-qitkat SHARED ${qitkat_sources})
 find_library(ZMQ_LIB zmq)

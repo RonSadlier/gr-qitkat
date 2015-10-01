@@ -34,5 +34,6 @@ install(FILES
 	qitkat_get_hardware_data.xml
 	qitkat_filter_timestamps.xml
 	qitkat_send_hardware_data.xml
-	qitkat_extract_hardware_sdc.xml DESTINATION share/gnuradio/grc/blocks
+	qitkat_extract_hardware_sdc.xml
+	qitkat_qrng_source_i.xml DESTINATION share/gnuradio/grc/blocks
 )

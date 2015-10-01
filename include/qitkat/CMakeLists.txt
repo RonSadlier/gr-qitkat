@@ -35,5 +35,6 @@ install(FILES
 	get_hardware_data.h
 	filter_timestamps.h
 	send_hardware_data.h
-	extract_hardware_sdc.h DESTINATION include/qitkat
+	extract_hardware_sdc.h
+	qrng_source_i.h DESTINATION include/qitkat
 )

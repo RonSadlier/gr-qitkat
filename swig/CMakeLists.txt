@@ -23,7 +23,7 @@
 find_package(SWIG)
 find_package(PythonLibs 2)
 if(NOT SWIG_FOUND OR NOT PYTHONLIBS_FOUND)
-    return()
+	return()
 endif()
 include(GrSwig)
 include(GrPython)
@@ -32,7 +32,7 @@ include(GrPython)
 # Setup swig generation
 ########################################################################
 foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
-    list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
+	list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
 endforeach(incdir)
 
 set(GR_SWIG_LIBRARIES gnuradio-qitkat)
@@ -50,8 +50,8 @@ GR_SWIG_INSTALL(TARGETS qitkat_swig DESTINATION ${GR_PYTHON_DIR}/qitkat)
 # Install swig .i files for development
 ########################################################################
 install(
-    FILES
-    qitkat_swig.i
-    ${CMAKE_CURRENT_BINARY_DIR}/qitkat_swig_doc.i
-    DESTINATION ${GR_INCLUDE_DIR}/qitkat/swig
+	FILES
+	qitkat_swig.i
+	${CMAKE_CURRENT_BINARY_DIR}/qitkat_swig_doc.i
+	DESTINATION ${GR_INCLUDE_DIR}/qitkat/swig
 )

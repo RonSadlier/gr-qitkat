@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2013-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,11 @@
 #define INCLUDED_QITKAT_QRNG_SOURCE_I_IMPL_H
 
 #include <qitkat/qrng_source_i.h>
+#include <boost/lexical_cast.hpp>
 #include <zmq.hpp>
+#include "../rapidjson/document.h"
+#include "../rapidjson/stringbuffer.h"
+#include "../rapidjson/writer.h"
 
 namespace gr {
 	namespace qitkat {
@@ -31,7 +35,7 @@ namespace gr {
 		 */
 		class qrng_source_i_impl : public qrng_source_i {
 		 public:
-			qrng_source_i_impl(std::string middleware);
+			qrng_source_i_impl(std::string middleware, unsigned int count);
 			~qrng_source_i_impl();
 			
 			int work(int noutput_items,
@@ -40,6 +44,8 @@ namespace gr {
 					
 		 private:
 			std::string d_middleware;
+			unsigned int d_count;
+			unsigned int d_sentCount;
 			::zmq::context_t d_context;
 			::zmq::socket_t d_socket;
 		};

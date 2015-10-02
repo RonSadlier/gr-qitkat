@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<block>
+  <name>QRNG Source</name>
+  <key>qitkat_qrng_source_i</key>
+  <category>qitkat</category>
+  <import>import qitkat</import>
+  <make>qitkat.qrng_source_i($middleware, $count)</make>
+  <param>
+    <name>Middleware</name>
+    <key>middleware</key>
+    <type>string</type>
+  </param>
+  <param>
+    <name>Count</name>
+    <key>count</key>
+    <type>int</type>
+  </param>
+  <source>
+    <name>out</name>
+    <type>int</type>
+  </source>
+  <doc>
+    Output a stream of random integers.
+  </doc>
+</block>

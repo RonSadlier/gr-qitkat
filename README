@@ -38,3 +38,6 @@ Known Issues:
 - The block ecc_repetition_decode seems to drop samples for k>7. A
   work around for this issue is to manually set the buffer size of the
   sdc_decode block in the flowgraph.
+
+- RapidJSON isn't implemented as a git submodule, which means we need to
+manually copy over files from the original repo.

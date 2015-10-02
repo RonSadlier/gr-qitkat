@@ -42,7 +42,7 @@ namespace gr {
 			 * class. qitkat::qrng_source_i::make is the public interface for
 			 * creating new instances.
 			 */
-			static sptr make(std::string middleware);
+			static sptr make(std::string middleware, unsigned int count);
 		};
 	}
 }

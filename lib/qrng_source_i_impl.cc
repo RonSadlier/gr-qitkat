@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /* 
- * Copyright 2013-2015 Ronald J. Sadlier - Oak Ridge National Laboratory
+ * Copyright 2015 Ronald J. Sadlier - Oak Ridge National Laboratory
  * 
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,18 +30,22 @@ namespace gr {
 		/**
 		 * \brief todo.
 		 */
-		qrng_source_i::sptr qrng_source_i::make(std::string middleware) {
-			return gnuradio::get_initial_sptr(new qrng_source_i_impl(middleware));
+		qrng_source_i::sptr qrng_source_i::make(std::string middleware, unsigned int count) {
+			return gnuradio::get_initial_sptr(new qrng_source_i_impl(middleware, count));
 		}
 		
 		/**
 		 * \brief Constructor.
 		 */
-		qrng_source_i_impl::qrng_source_i_impl(std::string middleware)
+		qrng_source_i_impl::qrng_source_i_impl(std::string middleware, unsigned int count)
 				: gr::sync_block("qrng_source_i",
 				gr::io_signature::make(0, 0, 0),
 				gr::io_signature::make(1, 1, sizeof(unsigned int))),
-				d_middleware(middleware), d_context(1), d_socket(d_context, ZMQ_REQ) {
+				d_middleware(middleware), d_count(count), d_sentCount(0), d_context(1),
+				d_socket(d_context, ZMQ_REQ) {
+			if(d_count % 2 == 1) {
+				std::cerr << "Non-even count given, rounding to: " << ++d_count << std::endl;
+			}
 			set_output_multiple(2);
 			d_socket.connect(d_middleware.c_str());
 		}
@@ -61,15 +65,45 @@ namespace gr {
 				gr_vector_void_star &output_items) {
 			unsigned int *out = (unsigned int*)output_items[0];
 			
-			for(std::size_t i = 0; i < noutput_items; i+=2) {
+			if(d_sentCount >= d_count) {
+				std::cerr << "A";
+				return -1;
+			}
+			
+			std::size_t outCount(0);
+			
+			if(d_count < noutput_items) {
+				outCount = d_count;
+				d_sentCount += d_count;
+			} else {
+				outCount = noutput_items;
+				d_sentCount += noutput_items;
+			}
+			
+			// zmq doesn't give us null terminated strings, so we need
+			// to copy over the data
+			char* buffer = new char[256];
+			
+			for(std::size_t i = 0; i < outCount; i+=2) {
 				d_socket.send("{\"transaction_type\":\"rx\"}", 27);
 				::zmq::message_t response;
 				d_socket.recv(&response);
 				
-				/** \todo */
+				assert(response.size() < 256);
+				
+				memcpy(buffer, response.data(), response.size());
+				memset(buffer+response.size(), '\0', 1);
+				
+				::rapidjson::Document dom;
+				dom.Parse(buffer);
+				
+				uint_fast64_t temp(dom["result"].GetUint64());
+				out[i] = temp & 0xFFFFFFFF;
+				out[i+1] = (temp >> 32) & 0xFFFFFFFF;
 			}
 			
-			return noutput_items;
+			delete[] buffer;
+			return outCount;
 		}
 	}
 }

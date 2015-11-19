@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <block>
-  <name>SDC Decode</name>
-  <key>qitkat_sdc_decode_bb</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
-  <make>qitkat.sdc_decode_bb($n)</make>
-  <param>
-    <name>n</name>
-    <key>n</key>
-    <type>int</type>
-  </param>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>byte</type>
-  </source>
-  <doc>
-    Decodes incoming SDC flags into the bits encoded by the bell state the flag represents.
-  </doc>
+	<name>SDC Decode</name>
+	<key>qitkat_sdc_decode_bb</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.sdc_decode_bb($n)</make>
+	<param>
+		<name>n</name>
+		<key>n</key>
+		<type>int</type>
+	</param>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>byte</type>
+	</source>
+	<doc>
+		Decodes incoming SDC flags into the bits encoded by the bell state the flag represents.
+	</doc>
 </block>

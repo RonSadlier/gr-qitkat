@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <block>
-  <name>Repetition Decode</name>
-  <key>qitkat_ecc_repetition_decode_bb</key>
-  <category>qitkat.ecc</category>
-  <import>import qitkat</import>
-  <make>qitkat.ecc_repetition_decode_bb($repetition)</make>
-  <param>
-    <name>Repetition</name>
-    <key>repetition</key>
-    <type>int</type>
-  </param>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>byte</type>
-  </source>
+	<name>Repetition Decode</name>
+	<key>qitkat_ecc_repetition_decode_bb</key>
+	<category>qitkat.ecc</category>
+	<import>import qitkat</import>
+	<make>qitkat.ecc_repetition_decode_bb($repetition)</make>
+	<param>
+		<name>Repetition</name>
+		<key>repetition</key>
+		<type>int</type>
+	</param>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>byte</type>
+	</source>
 </block>

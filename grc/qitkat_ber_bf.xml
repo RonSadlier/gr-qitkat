@@ -1,32 +1,32 @@
 <?xml version="1.0"?>
 <block>
-  <name>BER</name>
-  <key>qitkat_ber_bf</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
-  <make>qitkat.ber_bf($num_items, $bit_mask)</make>
-  <param>
-    <name>Number of Items</name>
-    <key>num_items</key>
-    <value>1000</value>
-    <type>int</type>
-  </param>
-  <param>
-    <name>Bit Mask</name>
-    <key>bit_mask</key>
-    <value>255</value>
-    <type>int</type>
-  </param>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-    <nports>2</nports>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>float</type>
-  </source>
-  <doc>
-    Calculate the BER between two unsigned char input streams of num_items, bit by bit. Use bit_mask to isolate relevant bits in each iterm. Values for bit_mask range from 0x01 to 0xFF.
-  </doc>
+	<name>BER</name>
+	<key>qitkat_ber_bf</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.ber_bf($num_items, $bit_mask)</make>
+	<param>
+		<name>Number of Items</name>
+		<key>num_items</key>
+		<value>1000</value>
+		<type>int</type>
+	</param>
+	<param>
+		<name>Bit Mask</name>
+		<key>bit_mask</key>
+		<value>255</value>
+		<type>int</type>
+	</param>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+		<nports>2</nports>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>float</type>
+	</source>
+	<doc>
+		Calculate the BER between two unsigned char input streams of num_items, bit by bit. Use bit_mask to isolate relevant bits in each iterm. Values for bit_mask range from 0x01 to 0xFF.
+	</doc>
 </block>

@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <block>
-  <name>Golay2412 Decode</name>
-  <key>qitkat_ecc_golay2412_decode_bb</key>
-  <category>qitkat.ecc</category>
-  <import>import qitkat</import>
-  <make>qitkat.ecc_golay2412_decode_bb()</make>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>byte</type>
-  </source>
-  <doc>
-    Decode data using the Golay2412 algorithm.
-  </doc>
+	<name>Golay2412 Decode</name>
+	<key>qitkat_ecc_golay2412_decode_bb</key>
+	<category>qitkat.ecc</category>
+	<import>import qitkat</import>
+	<make>qitkat.ecc_golay2412_decode_bb()</make>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>byte</type>
+	</source>
+	<doc>
+		Decode data using the Golay2412 algorithm.
+	</doc>
 </block>

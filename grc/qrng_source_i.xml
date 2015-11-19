@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <block>
-  <name>QRNG Source</name>
-  <key>qitkat_qrng_source_i</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
-  <make>qitkat.qrng_source_i()</make>
-  <sink>
-    <name>out</name>
-    <type>int</type>
-  </sink>
-  <doc>
-    Output a stream of random integers.
-  </doc>
+	<name>QRNG Source</name>
+	<key>qitkat_qrng_source_i</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.qrng_source_i()</make>
+	<sink>
+		<name>out</name>
+		<type>int</type>
+	</sink>
+	<doc>
+		Output a stream of random integers.
+	</doc>
 </block>

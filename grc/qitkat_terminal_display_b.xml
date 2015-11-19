@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <block>
-  <name>Terminal Display</name>
-  <key>qitkat_terminal_display_b</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
-  <make>qitkat.terminal_display_b()</make>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <doc>
-    Output a stream of bytes to the terminal display.
-  </doc>
+	<name>Terminal Display</name>
+	<key>qitkat_terminal_display_b</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.terminal_display_b()</make>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<doc>
+		Output a stream of bytes to the terminal display.
+	</doc>
 </block>

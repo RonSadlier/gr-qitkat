@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <block>
-  <name>Hamming74 Encode</name>
-  <key>qitkat_ecc_hamming74_encode_bb</key>
-  <category>qitkat.ecc</category>
-  <import>import qitkat</import>
-  <make>qitkat.ecc_hamming74_encode_bb()</make>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>byte</type>
-  </source>
-  <doc>
-    Encode data using the Hamming74 algorithm.
-  </doc>
+	<name>Hamming74 Encode</name>
+	<key>qitkat_ecc_hamming74_encode_bb</key>
+	<category>qitkat.ecc</category>
+	<import>import qitkat</import>
+	<make>qitkat.ecc_hamming74_encode_bb()</make>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>byte</type>
+	</source>
+	<doc>
+		Encode data using the Hamming74 algorithm.
+	</doc>
 </block>

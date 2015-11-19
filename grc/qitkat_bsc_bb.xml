@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <block>
-  <name>BSC</name>
-  <key>qitkat_bsc_bb</key>
-  <category>qitkat</category>
-  <import>import qitkat</import>
-  <make>qitkat.bsc_bb($error_rate, $seed, $bit_mask)</make>
-  <param>
-    <name>Error Rate</name>
-    <key>error_rate</key>
-    <value>0.1</value>
-    <type>real</type>
-  </param>
-  <param>
-    <name>PRNG seed</name>
-    <key>seed</key>
-    <value>1</value>
-    <type>int</type>
-  </param>
-  <param>
-    <name>Bit Mask</name>
-    <key>bit_mask</key>
-    <value>255</value>
-    <type>int</type>
-  </param>
-  <sink>
-    <name>in</name>
-    <type>byte</type>
-  </sink>
-  <source>
-    <name>out</name>
-    <type>byte</type>
-  </source>
-  <doc>
-    A binary symmetric channel.
-  </doc>
+	<name>BSC</name>
+	<key>qitkat_bsc_bb</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.bsc_bb($error_rate, $seed, $bit_mask)</make>
+	<param>
+		<name>Error Rate</name>
+		<key>error_rate</key>
+		<value>0.1</value>
+		<type>real</type>
+	</param>
+	<param>
+		<name>PRNG seed</name>
+		<key>seed</key>
+		<value>1</value>
+		<type>int</type>
+	</param>
+	<param>
+		<name>Bit Mask</name>
+		<key>bit_mask</key>
+		<value>255</value>
+		<type>int</type>
+	</param>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>byte</type>
+	</source>
+	<doc>
+		A binary symmetric channel.
+	</doc>
 </block>

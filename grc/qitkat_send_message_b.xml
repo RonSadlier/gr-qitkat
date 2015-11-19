@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<block>
+	<name>Send Message</name>
+	<key>qitkat_send_message_b</key>
+	<category>qitkat</category>
+	<import>import qitkat</import>
+	<make>qitkat.send_message_b($endpoint, $timeout, $name)</make>
+	<param>
+		<name>Endpoint</name>
+		<key>endpoint</key>
+		<type>string</type>
+	</param>
+	<param>
+		<name>Timeout</name>
+		<key>timeout</key>
+		<type>int</type>
+	</param>
+	<param>
+		<name>Name</name>
+		<key>name</key>
+		<type>string</type>
+	</param>
+	<sink>
+		<name>in</name>
+		<type>byte</type>
+	</sink>
+</block>

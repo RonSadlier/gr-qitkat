@@ -26,6 +26,8 @@
 #include "qitkat/send_hardware_data.h"
 #include "qitkat/extract_hardware_sdc.h"
 #include "qitkat/qrng_source_i.h"
+#include "qitkat/send_message_b.h"
+#include "qitkat/receive_message_b.h"
 %}
 
 
@@ -65,3 +67,7 @@ GR_SWIG_BLOCK_MAGIC2(qitkat, send_hardware_data);
 GR_SWIG_BLOCK_MAGIC2(qitkat, extract_hardware_sdc);
 %include "qitkat/qrng_source_i.h"
 GR_SWIG_BLOCK_MAGIC2(qitkat, qrng_source_i);
+%include "qitkat/send_message_b.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, send_message_b);
+%include "qitkat/receive_message_b.h"
+GR_SWIG_BLOCK_MAGIC2(qitkat, receive_message_b);

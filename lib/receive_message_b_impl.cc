@@ -34,8 +34,8 @@ namespace gr {
 		 */
 		receive_message_b::sptr receive_message_b::make(const std::string endpoint,
 				const unsigned int timeout,
-				const std::string name) {
-			return gnuradio::get_initial_sptr(new receive_message_b_impl(endpoint, timeout, name));
+				const unsigned int receivedMax) {
+			return gnuradio::get_initial_sptr(new receive_message_b_impl(endpoint, timeout, receivedMax));
 		}
 		
 		/**
@@ -43,21 +43,21 @@ namespace gr {
 		 */
 		receive_message_b_impl::receive_message_b_impl(const std::string endpoint,
 				const unsigned int timeout,
-				const std::string name)
+				const unsigned int receivedMax)
 				: gr::sync_block("receive_message_b",
 				gr::io_signature::make(0, 0, 0),
 				gr::io_signature::make(1, 1, 1)),
-				d_endpoint(endpoint), d_timeout(timeout), d_name(name), d_context(1),
-				d_socket(d_context, ZMQ_REQ) {
-			d_socket.connect(endpoint.c_str());
-			d_socket.setsockopt(ZMQ_RCVTIMEO, &d_timeout, sizeof(d_timeout));
-			d_socket.setsockopt(ZMQ_SNDTIMEO, &d_timeout, sizeof(d_timeout));
+				d_endpoint(endpoint), d_timeout(timeout), d_receivedCount(0),
+				d_receivedMax(receivedMax), d_context(1), d_socket(d_context, ZMQ_SUB) {
+			d_socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
+			d_socket.connect(d_endpoint.c_str());
 		}
 		
 		/**
 		 * \brief \todo
 		 */
 		receive_message_b_impl::~receive_message_b_impl() {
+			d_socket.disconnect(d_endpoint.c_str());
 		}
 		
 		/**
@@ -68,9 +68,32 @@ namespace gr {
 				gr_vector_void_star &output_items) {
 			unsigned char* out = (unsigned char*)output_items[0];
 			
-			/** \todo */
+			if(d_receivedCount == d_receivedMax) {
+				return -1;
+			}
 			
-			return -1;
+			zmq::pollitem_t items[] = { { d_socket, 0, ZMQ_POLLIN, 0 } };
+			zmq::poll(&items[0], 1, d_timeout);
+			
+			if(items[0].revents & ZMQ_POLLIN) {
+				zmq::message_t msg;
+				d_socket.recv(&msg);
+				::rapidjson::Document _dom;
+				char* buffer = new char[msg.size()+1];
+				memcpy(buffer, msg.data(), msg.size());
+				memset(buffer+msg.size(), '\0', 1);
+				_dom.Parse(buffer);
+				delete[] buffer;
+				
+				/** \todo: this may be a problem later on!!!! **/
+				out[0] = _dom["result"].GetUint();
+				
+				d_receivedCount++;
+				
+				return 1;
+			}
+			
+			return 0;
 		}
 	}
 }

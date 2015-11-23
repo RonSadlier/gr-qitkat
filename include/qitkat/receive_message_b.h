@@ -43,7 +43,9 @@ namespace gr {
 			 * class. qitkat::receive_message_b::make is the public interface for
 			 * creating new instances.
 			 */
-			static sptr make(const std::string endpoint, const unsigned int timeout, const std::string name);
+			static sptr make(const std::string endpoint,
+					const unsigned int timeout, 
+					const unsigned int receivedMax);
 		};
 	}
 }

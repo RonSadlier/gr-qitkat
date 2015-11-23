@@ -72,7 +72,7 @@ namespace gr {
 				char temp = in[i] + 48;
 				std::string message("{\"method\":\"tx\",\"parameters\":[\""+d_name+"\", \""+std::string(&temp, 1)+"\"]}");
 				d_socket.send(message.data(), message.size());
-				std::cerr << "A";
+				
 				::zmq::message_t reply;
 				d_socket.recv(&reply);
 			}

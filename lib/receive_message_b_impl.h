@@ -24,6 +24,9 @@
 #include <qitkat/receive_message_b.h>
 #include <string>
 #include <zmq.hpp>
+#include "../rapidjson/include/rapidjson/document.h"
+#include "../rapidjson/include/rapidjson/stringbuffer.h"
+#include "../rapidjson/include/rapidjson/writer.h"
 
 namespace gr {
 	namespace qitkat {
@@ -31,7 +34,7 @@ namespace gr {
 		 public:
 			receive_message_b_impl(const std::string endpoint,
 					const unsigned int timeout,
-					const std::string name);
+					const unsigned int receivedMax);
 			~receive_message_b_impl();
 			
 			int work(int noutput_items,
@@ -41,9 +44,10 @@ namespace gr {
 		 private:
 			std::string d_endpoint;
 			unsigned int d_timeout;
-			std::string d_name;
 			::zmq::context_t d_context;
 			::zmq::socket_t d_socket;
+			unsigned int d_receivedCount;
+			unsigned int d_receivedMax;
 		};
 	}
 }

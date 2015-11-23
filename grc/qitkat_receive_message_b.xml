@@ -4,7 +4,7 @@
 	<key>qitkat_receive_message_b</key>
 	<category>qitkat</category>
 	<import>import qitkat</import>
-	<make>qitkat.receive_message_b($endpoint, $timeout, $name)</make>
+	<make>qitkat.receive_message_b($endpoint, $timeout, $receivedMax)</make>
 	<param>
 		<name>Endpoint</name>
 		<key>endpoint</key>
@@ -16,9 +16,9 @@
 		<type>int</type>
 	</param>
 	<param>
-		<name>Name</name>
-		<key>name</key>
-		<type>string</type>
+		<name>ReceivedMax</name>
+		<key>receivedMax</key>
+		<type>int</type>
 	</param>
 	<source>
 		<name>out</name>

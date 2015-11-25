@@ -73,27 +73,31 @@ namespace gr {
 			}
 			
 			zmq::pollitem_t items[] = { { d_socket, 0, ZMQ_POLLIN, 0 } };
-			zmq::poll(&items[0], 1, d_timeout);
 			
-			if(items[0].revents & ZMQ_POLLIN) {
-				zmq::message_t msg;
-				d_socket.recv(&msg);
-				::rapidjson::Document _dom;
-				char* buffer = new char[msg.size()+1];
-				memcpy(buffer, msg.data(), msg.size());
-				memset(buffer+msg.size(), '\0', 1);
-				_dom.Parse(buffer);
-				delete[] buffer;
-				
-				/** \todo: this may be a problem later on!!!! **/
-				out[0] = _dom["result"].GetUint();
-				
-				d_receivedCount++;
-				
-				return 1;
+			std::size_t count(0);
+			
+			while(count <= noutput_items && count <= 32) {
+				zmq::poll(&items[0], 1, d_timeout);
+				if(items[0].revents & ZMQ_POLLIN) {
+					zmq::message_t msg;
+					d_socket.recv(&msg);
+					::rapidjson::Document _dom;
+					char* buffer = new char[msg.size()+1];
+					memcpy(buffer, msg.data(), msg.size());
+					memset(buffer+msg.size(), '\0', 1);
+					_dom.Parse(buffer);
+					delete[] buffer;
+					
+					/** \todo: this may be a problem later on!!!! **/
+					out[count] = _dom["result"].GetUint();
+					d_receivedCount++;
+					count++;
+				} else {
+					break;
+				}
 			}
 			
-			return 0;
+			return count;
 		}
 	}
 }
